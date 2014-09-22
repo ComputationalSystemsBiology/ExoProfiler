@@ -1,0 +1,4 @@
+http://hgdownload.cse.ucsc.edu/goldenPath/hg19/bigZips/hg19.2bit
+http://hgdownload.cse.ucsc.edu/admin/exe/macOSX.x86_64/twoBitToFa
+chmod u+x twoBitToFa 
+./twoBitToFa hg19.2bit hg19.fa
