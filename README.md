@@ -31,7 +31,7 @@ Other imports:
 * logging, os, os.path, platform, urllib2, argparse, warnings, re
 
 
-### ExoProfiler
+### 5PrimeCounter
 
 Developed with:
 
@@ -55,6 +55,7 @@ Needed packages:
 * ape 
 
 ***
+***
 
 
 Pipeline presentation
@@ -62,6 +63,7 @@ Pipeline presentation
 
 The full pipeline is composed of three different steps.
 
+***
 
 ### 1. MatrixScanWS (Optional step)
 
@@ -92,49 +94,65 @@ folder as the output file of the input transfac matrix.
 #### Aditional information
 
 Tool developed in Python by Celine Hernandez (version 0.4).
+  
+***
 
+  
+### 2. 5PrimeCounter
 
-
-### 2. ExoProfiler
-
-
-ExoProfiler analyses a BAM file from a ChIP-Exo experiment in the context of potential transcription factor binding sites (TFBS) showing a given sequence motif of interest.
-
-Please note that in case of motif hits on both strands in the same location, only the one with highest score will be considered.```
-
-As input files, ExoProfiler receives a BAM file (and its BAI index) and a set of sequence motifs as created by MatrixScanWS, for instance, or any output file of RSAT's tool ```matrix_scan ```. Alternatively, the sequence motifs file can be replaced by a BED file. TOCHECK
-
+  
+5PrimeCounter analyses a BAM file from a ChIP-Exo experiment in the context of potential transcription factor binding sites (TFBS) showing a given sequence motif of interest.  
+  
+Please note that in case of motif hits on both strands in the same location, only the one with highest score will be considered.  
+  
+As input files, 5PrimeCounter receives a BAM file (and its BAI index) and a set of sequence motifs as created by MatrixScanWS, for instance, or any output file of RSAT's tool ```matrix_scan ```. Alternatively, the sequence motifs file can be replaced by a BED file. TOCHECK  
+  
+  
+  
 #### Use cases
-
+  
+  
+  
+  
 ##### Use case 1 : basic usage
 
 Necessary options :
 
- Short name | Long name | Description
- --- | --- | ---
- -bam \<BAM_FILE> | \--bam_file \<BAM_FILE> | Bam file of the ChIP-exo experiment. Requires the index of the bam file with name \<BAM_FILE>.bai in the same folder.
- -i \<INPUT_SITES> | \--input_sites \<INPUT_SITES> | Input is a file containing predicted Transcription Factor Binding Sites in RSAT matrix-scan output format. It can also accept BED files: see '--input-format' option below for further details.
- -o \<OUTPUT_PREFIX> | \--output_prefix \<OUTPUT_PREFIX> | Output file prefix. All output files will have that prefix in pathname.
+ Short name | Long name | Description |
+ --- | --- | --- |
+ -bam \<BAM_FILE> | \--bam_file \<BAM_FILE> | Bam file of the ChIP-exo experiment. Requires the index of the bam file with name \<BAM_FILE>.bai in the same folder. |
+ -i \<INPUT_SITES> | \--input_sites \<INPUT_SITES> | Input is a file containing predicted Transcription Factor Binding Sites in RSAT matrix-scan output format. It can also accept BED files: see '--input-format' option below for further details. |
+ -o \<OUTPUT_PREFIX> | \--output_prefix \<OUTPUT_PREFIX> | Output file prefix. All output files will have that prefix in pathname. |
 
 Default window size around motifs is set to 60 bases. This parameter can be modified using the -s option.
+
 
 Short name | Long name | Description
 --- | --- | ---
 -s \<SIZE> | --size \<SIZE> | Window size around motif for which the profile will be computed.
+-ob | \--output_bed | Write a BED file with the binding site regions defined by --size and/or --order_by_score.
 
 
-Additionally, user can provide BED file instead of a Matrix-scan file. This makes it necessary to tell so to ExoProfiler by replacing by adding '-if bed' or '--input_format bed' to the command line.
+Additionally, user can provide BED file instead of a Matrix-scan file. This makes it necessary to tell so to 5PrimeCounter by replacing by adding '-if bed' or '--input_format bed' to the command line.
+
 
 Short name | Long name | Description
 --- | --- | ---
 -if {matrix-scan,bed} | \--input_format {matrix-scan,bed} | Format of the file containing predicted Transcription Factor Binding Sites. Defaults to 'matrix-scan'. Can also accept 'bed' as value.
 
+  
+  
+  
 ##### Use case 2 : scan plus validation set generation
+
 
 Short name | Long name | Description
 --- | --- | ---
  &nbsp; | \--perm \<PERM_FOLDER> | Compute profiles for permuted matrices. ExoProfile analyses all files with the .tf extension.
 
+  
+  
+  
 ##### Use case 3 : using input genome
 
 Short name | Long name | Description
@@ -142,10 +160,9 @@ Short name | Long name | Description
 -g \<GENOME_SEQ> | \--genome_seq \<GENOME_SEQ> | Reference genome sequence as FASTA file. If this optional argument is given, the consesus sequence is plotted at the bottom of profile and heatmap plots and the sequences fo all binding will be written to integer encoded matrix files. Note, while reading a fasta file the first time, an index file is build in the same directory for faster access. First execution can thus be slower.
 -of | \--output_seq | Write a genomic sequences in FASTA format for the binding site regions defined by --size and --order_by_score.
 
-??
--ob | \--output_bed | Write a BED file with the binding site regions defined by --size and --order_by_score.
-
-
+  
+  
+  
 ##### Use case 4 : motif comparison (overlay mode)
 
 A shift distance, manually computed, can be used to shift sites by a given base pair number.
@@ -154,7 +171,9 @@ Short name | Long name | Description
 --- | --- | ---
 -sd \<SHIFT_DIST> | \--shift_dist \<SHIFT_DIST> | Shift sites by given distance (in bp) to the right (if positive) or to the left (if negative).
 
-
+  
+  
+  
 #### Aditional information
 
 ##### Other general options
@@ -183,24 +202,29 @@ Short name | Long name | Description
 
 ##### Dependencies
 
-ExoProfiler depends on python packages 'numpy', 'pysam' and 'HTSeq'. If a reference genome is provided to calculate consensus sequences (see Use case 3), the program also imports the 'pyfasta' package.
+5PrimeCounter depends on python packages 'numpy', 'pysam' and 'HTSeq'. If a reference genome is provided to calculate consensus sequences (see Use case 3), the program also imports the 'pyfasta' package.
 
 Tool developed in Python by Jonas Ibn-Salem (version 0.1).
 
+  
+***
 
+  
 ### 3. ExoPlotter ###
 
-ExoPlotter generates a set of PDF plots using output files generated by ExoProfiler. This R script needs as input the prefix provided to ExoProfiler.
+ExoPlotter generates a set of PDF plots using output files generated by 5PrimeCounter. This R script needs as input the prefix provided to 5PrimeCounter.
 
 Tool developed in R by Jonas Ibn-Salem (version 0.1), with code from Morgane Thomas-Chollier and Samuel Collombet.
 
 
+***
 ***
 
 
 Example analysis
 ------------------------------------------------------------------------
 
+***
 
 ### MatrixScanWS (Optional)
 
@@ -208,20 +232,20 @@ Using web services, scan a set of sequences for a motif provided as a matrix.
 
 #### Input files
 
-BED file : ```ExoProfiler/example_data/GR_IMR90.chip-seq_peaks.bed.center60```
+BED file : ```ExoProfiler/data/inputs_small/GR_IMR90.chip-seq_peaks.bed.center60```
 Output of a ChIP-Seq experiment from a human sample, i.e. list of peaks.
 
-Matrix (transfac) : ```ExoProfiler/example_data/indiv_motif.MA0113.2.tf```
+Matrix (transfac) : ```ExoProfiler/data/inputs_small/MA0113.2.tf```
 Matrix describing a motif as available in [JASPAR database](http://jaspar.genereg.net/cgi-bin/jaspar_db.pl?ID=MA0113.1&rm=present&collection=CORE).
 
 #### Use cases
 
-Command with provided example data, assuming location in folder `ExoProfiler/matrixScanWS`.
+Command with provided example data, assuming location in folder `ExoProfiler/00_matrixScanWS`.
 
 ##### Use case 1: basic usage.
 
     mkdir outputs_example
-    python matrixScanWS.py --bed_file ../example_data/matrixScanWS/GR_IMR90.chip-seq_peaks.bed.center60 --genome hg19 --matrix_file ../example_data/matrixScanWS/indiv_motif.MA0113.2.tf --uth_pval 0.001 --output_file ./outputs_example/output_matrix_scan_NR3C1_0-001.txt
+    python matrixScanWS.py --bed_file ../example_data/matrixScanWS/GR_IMR90.chip-seq_peaks.bed.center60 --genome hg19 --matrix_file ../example_data/matrixScanWS/MA0113.2.tf --uth_pval 0.001 --output_file ./outputs_example/output_matrix_scan_NR3C1_0-001.txt
 
 Output file
 
@@ -232,7 +256,7 @@ Output file
 Same command with --perm option.
 
     mkdir outputs_example
-    python matrixScanWS.py --bed_file ../example_data/matrixScanWS/GR_IMR90.chip-seq_peaks.bed.center60 --genome hg19 --matrix_file ../example_data/matrixScanWS/indiv_motif.MA0113.2.tf --uth_pval 0.001 --output_file ./outputs_example/output_matrix_scan_NR3C1_0-001.txt --perm
+    python matrixScanWS.py --bed_file ../example_data/matrixScanWS/GR_IMR90.chip-seq_peaks.bed.center60 --genome hg19 --matrix_file ../example_data/matrixScanWS/MA0113.2.tf --uth_pval 0.001 --output_file ./outputs_example/output_matrix_scan_NR3C1_0-001.txt --perm
 
 Output files
 
@@ -242,34 +266,35 @@ Output files
 
 
 
+***
 
 
-### ExoProfiler
+### 5PrimeCounter
 
-ExoProfiler performs a profile-based analysis by calculating a 5' coverage profile, given an BAM file from a ChIP-exo experiment (accompanied by its index in BAI) and a list of potential TF binding sites (TFBS) from motif matching analysis.
+5PrimeCounter performs a profile-based analysis by calculating a 5' coverage profile, given an BAM file from a ChIP-exo experiment (accompanied by its index in BAI) and a list of potential TF binding sites (TFBS) from motif matching analysis.
 
 
 #### Use cases
 
-Command with provided example data, assuming location in folder `ExoProfiler/exoProfiler`.
+Command with provided example data, assuming location in folder `ExoProfiler/01_5PrimeCounter`.
 
 ##### Use case 1 : basic usage
 
 #### Input files
 
-* BAM file : ```ExoProfiler/example_data/IMR90.rep2.uniq_mapped.chr20_sorted.bam```
+* BAM file : ```ExoProfiler/data/inputs_small/IMR90.rep2.uniq_mapped.chr20_sorted.bam```
 Sequence read alignment data in binary format.
 
-* BAI file : ```ExoProfiler/example_data/IMR90.rep2.uniq_mapped.chr20_sorted.bam.bai```
+* BAI file : ```ExoProfiler/data/inputs_small/IMR90.rep2.uniq_mapped.chr20_sorted.bam.bai```
 Index of the BAM file, created with `samtools index`. This index must be located in the same folder as the BAM file.
 
-* ```matrix_scan``` output : ```ExoProfiler/example_data/output_matrix_scan_NR3C1.txt```
+* ```matrix_scan``` output : ```ExoProfiler/data/inputs_small/output_matrix_scan_NR3C1.txt```
 Output from RSAT tool ```matrix_scan```, or directly generated by MatrixScanWS.
 
 
 #### Command
 
-Basic usage of ExoProfiler implies providing at least three parameters:
+Basic usage of 5PrimeCounter implies providing at least three parameters:
 
  * --input_sites for a matrix in matrix-scan format
  * --bam_file for a BAM file
@@ -277,15 +302,20 @@ Basic usage of ExoProfiler implies providing at least three parameters:
 
 Example of a simple command line :
 
-    python exoProfiler.py --input_sites ../example_data/output_matrix_scan_NR3C1.txt --bam_file ../example_data/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix ./output_exoprofiler
+    python ./01_5primeCounter/5PrimeCounter.py --input_sites ./data/inputs_small/output_matrix_scan_NR3C1_chr20.txt --bam_file ./data/inputs_small/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix ./output_5PrimeCounter
 
-By default, ExoProfiler will assume that the 'input sites' file is an output from `matrix_scan`, so there is no need to specify option `--input_format matrix-scan`. Alternatively, one can also run ExoProfiler with a BED file as input, but input format has to be specified. 
+By default, 5PrimeCounter will assume that the 'input sites' file is an output from `matrix_scan`, so there is no need to specify option `--input_format matrix-scan`. Alternatively, one can also run 5PrimeCounter with a BED file as input, but input format has to be specified. 
 
-    python exoProfiler.py --input_format bed --input_sites ../example_data/input_file.bed --bam_file ../example_data/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix ./output_exoprofiler
+    python 5PrimeCounter.py --input_format bed --input_sites ../example_data/input_file.bed --bam_file ../example_data/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix ./output_5PrimeCounter
 
 Example of a case where the size of the window around the motif has been changed with option --size. Default window size is set to 60.
 
-    python exoProfiler.py --input_sites ../example_data/output_matrix_scan_NR3C1.txt --bam_file ../example_data/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix ./output_exoprofiler --size 100
+    python ./01_5primeCounter/5PrimeCounter.py --input_sites ./data/inputs_small/output_matrix_scan_NR3C1_chr20.txt --bam_file ./data/inputs_small/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix ./output_5PrimeCounter_s100 --size 100
+
+Example of generation of an additional BED output, in case we changed the size of our region of interest.
+
+    python ./01_5primeCounter/5PrimeCounter.py --input_sites ./data/inputs_small/output_matrix_scan_NR3C1_chr20.txt --bam_file ./data/inputs_small/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix ./output_5PrimeCounter_s100obed --size 100 --output_bed
+
 
 * Output files
 
@@ -298,9 +328,9 @@ Example of a case where the size of the window around the motif has been changed
  
 ##### Use case 2 : validation using permuted matrices 
 
-Following Use Case 2 of MatrixScanWS a set of permuted motifs can be generated. One can then run ExoProfiler on all the generated matrix-scan outputs.
+Following Use Case 2 of MatrixScanWS a set of permuted motifs can be generated. One can then run 5PrimeCounter on all the generated matrix-scan outputs.
 
-    python exoProfiler.py --input_sites ../example_data/exoProfiler_usecase2/output_matrix_scan_NR3C1_chr20.txt --bam_file ../example_data/exoProfiler_usecase2/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix output_exoprofiler_wperm --perm
+    python ./01_5primeCounter/5PrimeCounter.py --input_sites ./data/inputs_small/output_matrix_scan_NR3C1_chr20.txt --bam_file ./data/inputs_small/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix ./output_5PrimeCounter_wperm --perm
 
 * Output files
 
@@ -313,22 +343,22 @@ Genome files in FASTA format can be quite voluminous. Default behaviour doesn't 
 
 #### Input files
 
-* BAM file : ```ExoProfiler/example_data/exoProfiler_usecase3/IMR90.rep2.uniq_mapped.chr20_sorted.bam```
+* BAM file : ```ExoProfiler/data/inputs_small/IMR90.rep2.uniq_mapped.chr20_sorted.bam```
 Sequence read alignment data in binary format.
 
-* BAI file : ```ExoProfiler/example_data/exoProfiler_usecase3/IMR90.rep2.uniq_mapped.chr20_sorted.bam.bai```
+* BAI file : ```ExoProfiler/data/inputs_small/IMR90.rep2.uniq_mapped.chr20_sorted.bam.bai```
 Index of the BAM file, created with `samtools index`. This index must be located in the same folder as the BAM file.
 
-* matrix\_scan output : ```ExoProfiler/example_data/exoProfiler_usecase3/output_matrix_scan_NR3C1_chr20.txt```
+* matrix\_scan output : ```ExoProfiler/data/inputs_small/output_matrix_scan_NR3C1_chr20.txt```
 Output from RSAT tool ```matrix_scan```, or directly generated by MatrixScanWS.
 
-* Reference genome (optional, see Use case 4): a FASTA file as downloaded from, for instance, UCSC's FTP site : ftp://hgdownload.cse.ucsc.edu/goldenPath/ Example of a command: `curl -o h19_chr20.fa.gz ftp://hgdownload.cse.ucsc.edu/goldenPath/hg19/chromosomes/chr20.fa.gz` Please note that files need to be decompressed into FASTA in order to be read by ExoProfiler.
+* Reference genome (optional, see Use case 4): a FASTA file as downloaded from, for instance, UCSC's FTP site : ftp://hgdownload.cse.ucsc.edu/goldenPath/ Example of a command: `curl -o h19_chr20.fa.gz ftp://hgdownload.cse.ucsc.edu/goldenPath/hg19/chromosomes/chr20.fa.gz` Please note that files need to be decompressed into FASTA in order to be read by 5PrimeCounter.
 
 #### Command
 
-    python exoProfiler.py --input_sites ../example_data/exoProfiler_usecase3/output_matrix_scan_NR3C1_chr20.txt --bam_file ../example_data/exoProfiler_usecase3/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix output_exoprofiler_wgenomechr20 --genome_seq ../example_data/exoProfiler_usecase3/hg19_chr20.fa
+    python ./01_5primeCounter/5PrimeCounter.py --input_sites ./data/inputs_small/output_matrix_scan_NR3C1_chr20.txt --bam_file ./data/inputs_small/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix ./output_5PrimeCounter_wgenomechr20 --genome_seq ./data/inputs_small/hg19_chr20.fa
 
-NB: By default, ExoProfiler will assume that the 'input sites' file is an output from `matrix_scan`, so there is no need to specify option `--input_format matrix-scan`.
+NB: By default, 5PrimeCounter will assume that the 'input sites' file is an output from `matrix_scan`, so there is no need to specify option `--input_format matrix-scan`.
 
 Output files
 
@@ -337,12 +367,12 @@ Output files
 \<output_prefix>.consensus.txt | Consensus motif.
 \<output_prefix>.down_counts.tab | Up counts.
 \<output_prefix>.up_counts.tab | Down counts.
-\<output_prefix>.seq_matrix.tab | Matrix counts.
+\<output_prefix>.seq_matrix.tab | Matrix of sequences.
 
 
 * Example of generation of an additional FASTA output.
 
-    python exoProfiler.py --input_sites ../example_data/exoProfiler_usecase3/output_matrix_scan_NR3C1_chr20.txt --bam_file ../example_data/exoProfiler_usecase3/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix output_exoprofiler_wgenomechr20 --genome_seq ../example_data/exoProfiler_usecase3/hg19_chr20.fa --output_seq
+    python ./01_5primeCounter/5PrimeCounter.py --input_sites ./data/inputs_small/output_matrix_scan_NR3C1_chr20.txt --bam_file ./data/inputs_small/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix ./output_5PrimeCounter_outputfa --genome_seq ./data/inputs_small/hg19_chr20.fa --output_seq
 
 Output files
 
@@ -351,98 +381,107 @@ Output files
 \<output_prefix>.consensus.txt | Consensus motif.
 \<output_prefix>.down_counts.tab | Up counts.
 \<output_prefix>.up_counts.tab | Down counts.
-\<output_prefix>.seq_matrix.tab | Matrix counts.
-\<output_prefix>.fa | Sequences of motifs in FASTA format.
+\<output_prefix>.seq_matrix.tab | Matrix of sequences.
+\<output_prefix>.fa | Sequences of regions of interest in FASTA format.
 
 
  
 ##### Use case 4 : motif comparison (overlay mode)
 
 
-* Overlay plots
+* Overlay plots (Multiple profile plots)
 
-```Rscript exoPlotter.R  -i sites.ms-scan -bam exo.bam -o output_prefix```
-
-
-* Multiple profile plots
-
-```Rscript exoPlotter.R  -i sites.ms-scan -bam exo.bam -o output_prefix```
+TODO
 
 
 ##### Other options
 
-Example of generation of an additional BED output.
+Example of ordering output by score instead of by coverage.
 
-    python exoProfiler.py --input_sites ../example_data/output_matrix_scan_NR3C1.txt --bam_file ../example_data/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix output_exoprofiler_obed --output_bed
+    python ./01_5primeCounter/5PrimeCounter.py --input_sites ./data/inputs_small/output_matrix_scan_NR3C1_chr20.txt --bam_file ./data/inputs_small/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix ./output_5PrimeCounter_orderscore --order_by_score
+
+Example of changing number of output sites.
+
+    python ./01_5primeCounter/5PrimeCounter.py --input_sites ./data/inputs_small/output_matrix_scan_NR3C1_chr20.txt --bam_file ./data/inputs_small/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix ./output_5PrimeCounter_100sites --number_of_sites 100
+
+    python ./01_5primeCounter/5PrimeCounter.py --input_sites ./data/inputs_small/output_matrix_scan_NR3C1_chr20.txt --bam_file ./data/inputs_small/IMR90.rep2.uniq_mapped.chr20_sorted.bam --output_prefix ./output_5PrimeCounter_20pcsites --percent_of_sites 20
 
 
-##### Example on big file
 
-    python exoProfiler.py --input_sites ../example_data/example_fullgenome/output_matrix_scan_NR3C1.txt --bam_file ../example_data/example_fullgenome/IMR90.rep2.uniq_mapped.bam.sorted.bam --output_prefix output_exoprofiler_full
-
+***
 
 ### ExoPlotter
 
-Plot the profile from an output of ExoProfiler.
+Plot the profile from an output of 5PrimeCounter.
 
-#### Use cases (same as for ExoProfiler)
+#### Use cases (same as for 5PrimeCounter)
 
 ##### Use case 1 : basic usage
 
-Prefix from ExoProfiler. This will be used to find output files from ExoProfiler, namely a consensus sequence, and up and down counts.
+Prefix from 5PrimeCounter. This will be used to find output files from 5PrimeCounter, namely a consensus sequence, and up and down 5' counts.
 
  * Command
 
-    Rscript exoPlotter.R <output_prefix_of_exoProfiler.py>
+    Rscript exoPlotter.R <output_prefix_of_5PrimeCounter.py>
 
  * Output files
 
  File name | Content
 --- | ---
-output_exoprofiler.maxstrand_heatmap.pdf | 
-output_exoprofiler.profile.pdf | 
-output_exoprofiler.cluster.pdf |
+output_5PrimeCounter.maxstrand_heatmap.pdf | .
+output_5PrimeCounter.profile.pdf | .
+output_5PrimeCounter.cluster.pdf | .
+
+##### Use case 2 : with permutations
+
+As for use case 1, prefix is the same as the one used for 5PrimeCounter. This will be used to find output files generated by 5PrimeCounter, namely a consensus sequence, and up and down 5' counts.
+Profiles also contain a summary of the permuted profiles computed previously, as well as a Wilcoxon Rank sum test.
+
+ * Command
+
+    Rscript exoPlotter.R <output_prefix_of_5PrimeCounter.py> perm
+
+ * Additional output files
+
+Same files as for Use Case 1, plus:
+
+ File name | Content
+ --- | ---
+ output_5PrimeCounter.permut_matrix_10.values.tab | .
+
 
 ##### Use case 3 : using input genome
 
 ###### Input and command line
 
-Prefix from ExoProfiler. This will be used to find output files from ExoProfiler, namely a consensus sequence, and up and down counts.
-A label saying that genome sequence was available.
+As for use case 1, prefix is the same as the one used for 5PrimeCounter. This will be used to find output files generated by 5PrimeCounter, namely a consensus sequence, and up and down 5' counts.
+If a label is provided saying that genome sequence was available, exoPlotter also displays a graph serving as quality check for the motif/regions alignment.
 
  * Command
 
-    Rscript exoPlotter.R <output_prefix_of_exoProfiler.py> genome_seq
+    Rscript exoPlotter.R <output_prefix_of_5PrimeCounter.py> genome_seq
 
- * Output files
+ * Additional output files
 
 Same files as for Use Case 1, plus:
 
  File name | Content
---- | ---
-output_exoprofiler_seq.pdf | Quality check.
+ --- | ---
+ output_5PrimeCounter_seq.pdf | Quality check.
 
 
 ##### Use case 4
 
-profile_signif.R?
-
-    Rscript overlay_plot.R  <prefix_A> <prefix_B> <output_prefix> <shift_dist> <nameA> <nameB>
-
-    Rscript multiple_profiles.R <output_prefix_1> <output_prefix_2> ... <out_file>
-
-    Rscript overlay_plot_align.R  prefix_A prefix_B output_prefix shift_dist nameA nameB
-
+TODO
 
 ***
 
 License
 -------
 
-[TODO: add an open source license]
+TODO
 
 
 ***
 
-Documentation version 0.1 - 01/08/2014
 
