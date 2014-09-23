@@ -4,6 +4,8 @@ ExoProfiler
 
 >
 > Analyzing transcription factor (TF) binding sites using ChIP-Seq and ChIP-exo data. 
+> 
+> Stephan R. Starick*, Jonas Ibn-Salem*, Marcel Jurk, Céline Hernandez, Michael I. Love, Ho-Ryun Chung, Martin Vingron, Morgane Thomas-Chollier#, Sebastiaan H. Meijsing# **ChIP-exo footprints provide structural and functional insights into the genomic binding of cooperating transcription factors.**, submitted
 >
 
 1. Requirements
@@ -479,7 +481,7 @@ TODO
 License
 -------
 
-TODO
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">ExoProfiler</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">MPIMG & IBENS</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/ComputationalSystemsBiology/ExoProfiler" rel="dct:source">https://github.com/ComputationalSystemsBiology/ExoProfiler</a>.
 
 
 ***
