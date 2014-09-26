@@ -56,7 +56,7 @@
 #                         matrices will contain the tag '_perm' and an index. The files will be created in
 #                         the same folder as the output file.
 # 
-# Version 0.4 - 30/07/2014
+# Last update: 26.09.2014 (CEH)
 # 
 #
 ###########################################################'

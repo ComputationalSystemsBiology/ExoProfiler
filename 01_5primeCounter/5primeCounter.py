@@ -1,15 +1,38 @@
 #!/usr/bin/env python
 """
-This script analysis the read profile of ChIP-exo experiments 
-(given as BAM files) on potential transcription factor binding sites (TFBS) 
-that show a given sequence motif of interest.
-The sites should be given as RSAT matrix-scan output file or BED file.
-In case of motif hits on both strands in the same location, only the one 
-with highest score will be considered.
+5PrimeCounter
+=============
 
-This program depends on the python packages 'numpy' and 'HTSeq'. If the 
-reference sequence is provided to calculate consensus sequences, the 
-program also imports the 'Fasta' package.
+5PrimeCounter analyses a BAM file from a ChIP-Exo experiment in the context of potential transcription factor binding sites (TFBS) presenting a given sequence motif of interest.
+
+Consequently, as input files, 5PrimeCounter needs a BAM file (and its BAI index) and a set of sequence motifs as created by MatrixScanWS for instance, or any output file of RSAT’s tool ‘matrix_scan’.
+
+Please note that in case of motif hits on both strands in the same location, only the one with highest score will be considered.
+
+Use cases
+
+    Use case 1 : basic usage
+    Use case 2 : validation using permuted matrices
+    Use case 3 : QC and FASTA creation using an input genome
+    Use case 4 : motif comparison (overlay mode)
+
+Requirements
+
+    5PrimeCounter depends on python packages ‘numpy’, ‘pysam’ and ‘HTSeq’. If a reference genome is provided to calculate consensus sequences (see Use case 3), 5PrimeCounter also imports the ‘pyfasta’ package.
+
+Developed with:
+
+    Python (2.7.3).
+
+Package dependencies:
+
+    numpy, HTSeq (see installation guide), pysam (HTSeq dependency)
+    (optional) pyfasta, FASTA package (need depend on command line options)
+
+Tool developed in Python by Jonas Ibn-Salem.
+
+# Last update: 26.09.2014 (CEH)
+
 """
 epilog="""
 15.10.13 Jonas Ibn-Salem <ibnsalem@molgen.mpg.de>
@@ -22,28 +45,40 @@ import HTSeq    # For installation see: http://www-huber.embl.de/users/anders/HT
 import subprocess
 
 
+## Read and check input parameters
+
 def commandline():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter, epilog=epilog)
-    parser.add_argument("-i", "--input_sites", type=str, required=True, help="Predicted TFBS in RSAT matrix-scan output format")
-    parser.add_argument("-if", "--input_format", type=str, choices=['matrix-scan', 'bed'], default="matrix-scan", help="Input format, 'matrix-scan' (default) or 'bed'.")
+    
+    # Use case 1
     parser.add_argument("-bam", "--bam_file", type=str, required=True, help="Bam file of the ChIP-exo experiment. Requires the index of the bam file with name <BAM_FILE>.bai in the same folder.")
-    parser.add_argument("-o", "--output_prefix", type=str, required=True, help="Output file preifix. All output files will have that prefix in pathname.")
-    parser.add_argument("-s", "--size", type=int, default=60, help="Window size around motif for which the profile will be computed")
-    parser.add_argument("-ob", "--output_bed", action="store_true", help="Write a BED file with the binding site regions defined by --size and/or --order_by_score.")
+    parser.add_argument("-i", "--input_sites", type=str, required=True, help="Input is a file containing predicted Transcription Factor Binding Sites in RSAT matrix-scan output format.")
+    parser.add_argument("-o", "--output_prefix", type=str, required=True, help="All output file names will have that prefix. Can include a path.")
 
-    parser.add_argument("-pm", "--perm", action="store_true", help="Also analyze permuted motifs.")
+    parser.add_argument("-s", "--size", type=int, default=60, help="Window size around motif for which the profile will be computed.")
+    parser.add_argument("-ob", "--output_bed", action="store_true", help="Write a BED file with the binding site regions defined by –-size and –-order_by_score.")
+    parser.add_argument("-if", "--input_format", type=str, choices=['matrix-scan'], default="matrix-scan", help="Input format, 'matrix-scan' output (default).")
 
-    parser.add_argument("-g", "--genome_seq", type=str, help="Reference genome sequence as FASTA file. \
-        If this optional argument is given, the consensus sequence is plotted at the bottom of profile and heatmap plots and the sequences fo all binding will be written to integer encoded matrix files. \
-        Note, while reading a fasta file the first time, an index file is build in the same directory for faster access. So the first time it can take a while.")
-    parser.add_argument("-of", "--output_seq", action="store_true", help="Write a genomic sequences in FastA format for the binding site regions defined by --size and --order_by_score.")
+	# Use case 2
+    parser.add_argument("-pm", "--perm", action="store_true", help="Compute profiles from matrix-scan results for permuted matrices. 5PrimeCounter searches for all files with the same name as the <INPUT_SITES> file, plus the tag ‘_perm’ and a number. Files must be located in the same folder as <INPUT_SITES>.")
 
-    parser.add_argument("-os", "--order_by_score", action="store_true", help="Sort output files motif by score instead of occupancy level (number of total read counts) which is default")
-    parser.add_argument("-n", "--number_of_sites", type=int, help="The number of sites to be considered. For a given N take only the top N sites by occupancy level (or motif score if -os is set)")
-    parser.add_argument("-p", "--percent_of_sites", type=float, help="The percent of sites to be considered. For a given P take only the top P percent sites by occupancy level (or motif score if -os is set)")
-#     parser.add_argument("-fs", "--flip_strand", action="store_true", help="Flipt the strand of motif matches from '+' to '-' and from '-' to '+' for all input sites.")
-#     parser.add_argument("-sd", "--shift_dist", type=int, help="Shift sites by given distance (in bp) to the right (if positive) or to the left (if negative).")
+    # Use case 3
+    parser.add_argument("-g", "--genome_seq", type=str, help="Reference genome sequence in FASTA format. If this optional argument is given, the consensus sequence of the motif is plotted at the bottom of profile and heatmap plots. Moreover sequences for all binding regions will be written to an integer-encoded matrix file. Note, if a fasta file is read for the first time, an index is built in the same directory for faster access. First execution can thus be slower.")
+    parser.add_argument("-of", "--output_seq", action="store_true", help="Write a genomic sequences in FASTA format for the binding site regions defined by --size and --order_by_score. Needs a genome in FASTA format to be provided using option --genome_seq.")
+
+    # Use case 4
+    # parser.add_argument("-sd", "--shift_dist", type=int, help="Shift sites by given distance (in bp) to the right (if positive) or to the left (if negative).")
+
+    # Other options
+    parser.add_argument("-os", "--order_by_score", action="store_true", help="By default, output regions are sorted by occupancy level (number of total read counts). This option sorts output regions by score instead of occupancy level.")
+    parser.add_argument("-n", "--number_of_sites", type=int, help="Number of sites to be considered. For a given N take only the top N sites by occupancy level (or motif score if -os is set).")
+    parser.add_argument("-p", "--percent_of_sites", type=float, help="Percent of sites to be considered. For a given P take only the top P percent sites by occupancy level (or motif score if -os is set).")
+    # parser.add_argument("-fs", "--flip_strand", action="store_true", help="Flip the strand of motif matches from ‘+’ to ‘-’ and from ‘-’ to ‘+’ for all input sites.")
+
     return parser.parse_args()
+
+
+## Parse input files
 
 def parse_matrix_scan(inFile):
     """
@@ -104,25 +139,6 @@ def parse_matrix_scan(inFile):
     
     return sorted_sites
 
-# def parse_bed(inFile):
-#     """ returns regions from a BED file as list of dicts sorted by score"""
-#     
-#     regions = []
-#     
-#     for line in open(inFile):
-#     
-#         sp = line.strip().split('\t')
-#         regions.append({
-#         "chr":sp[0], "ext_start":int(sp[1]), 
-#         "ext_end":int(sp[2]), "name":sp[3], 
-#         "score":float(sp[4]) if sp[4] != '.' else '.',
-#         "strand":sp[5], "center":(int(sp[2])+int(sp[1]))/2,
-#         "location":get_loc_str(sp[0], int(sp[1]), int(sp[2])),
-#         "motif_seq":""
-#         })
-#     
-#     return sorted(regions, cmp=lambda x,y: cmp(x['score'], y['score']), reverse = True )
-    
 
 def add_center(sites, size):
     """ 
@@ -151,7 +167,8 @@ def add_center(sites, size):
         s["location"] = s["chr"] + ":" + str(s["ext_start"]+1) + "-" + str(s["ext_end"])
 
     return sites
-    
+
+
 def reads_profile(regions, bam_file, size):
     """
     Parses reads from BAM file and adds number of forward and reverse 
@@ -209,7 +226,9 @@ def reads_profile(regions, bam_file, size):
     print "INFO: Finished parsing of BAM file."
                 
     return regions
-    
+
+## Write functions
+
 def write_counts(regions, output_prefix):
     """ Writes count matrix as TAB seperated file to output file. """
 
@@ -227,7 +246,8 @@ def write_counts(regions, output_prefix):
         
     upHandle.close()
     downHandle.close()
-    
+
+
 def write_region_to_bed(regions, outFile, size=60):
     """Regions to outFile in BED format"""
     
@@ -242,6 +262,7 @@ def write_region_to_bed(regions, outFile, size=60):
             reg["strand"] 
             ]]) + '\n')
 
+
 def write_fasta(regions, outFile):
     """writes sequences of regions to fasta file"""
     
@@ -250,12 +271,8 @@ def write_fasta(regions, outFile):
             outHandle.write(">" + reg["location"]+"_"+reg["strand"] + "\n")
             outHandle.write(reg["ext_seq"] + "\n")
 
+## Read sequences
 
-# def get_loc_str(chr, start, end):
-#     """ retuns a 1-based location string in the format 'chr:start-end'
-#     from the zero-based half-open input coordinates. """
-#     return "{0}:{1}-{2}".format(chr, start+1, end)
-    
 def parse_sequences(sites, size, fasta_file):
     """Adds the binding site sequences extende to 'size' per row (decoded as A=0, C=1, G=2, T=3) to each input region."""
     from pyfasta import Fasta  # Fasta package is needed to fetch sequences from genome fasta file
@@ -289,6 +306,7 @@ def parse_sequences(sites, size, fasta_file):
     print "INFO: Finished sequences."
     return regions 
 
+
 def reverse_complement(seq):
     """ returns the reverse complement of seq"""
     rep_dict = {"A":"T", \
@@ -303,7 +321,7 @@ def reverse_complement(seq):
             revcomp += base
 
     return revcomp[::-1]
-    
+
 
 def get_consensus(sites, seq_type, m=-1):
     """return a string as consesus sequence """
@@ -340,6 +358,9 @@ def get_consensus(sites, seq_type, m=-1):
     
     return consenus
 
+
+## Write functions
+
 def write_consensus(consenus, size, outFile):
     """ write extende consenus sequence to outFile"""
     if len(consensus) == size : 
@@ -352,7 +373,8 @@ def write_consensus(consenus, size, outFile):
         
     with open(outFile, 'w') as outHandle:
         outHandle.write(ext_consensus  + "\n")
-        
+
+
 def write_seq_matrix(seq_matrix, outFile):
     """ writes for each region the genomic sequence encoded as integers to tab seperated file"""
     base2int = {"A":"0", "C":"1", "G":"2", "T":"3", "N":"4"}
@@ -360,7 +382,10 @@ def write_seq_matrix(seq_matrix, outFile):
     with open(outFile, 'w') as outHandle:
         for reg in regions:
             outHandle.write('\t'.join([reg["location"]+"_"+reg["name"]] + [base2int[b] for b in reg["ext_seq"]]) + '\n')
-    
+
+
+## Ordering functions
+
 def order_by_read_counts(regions):
     """Reorders the input list of regions by number of total read counts"""
     return sorted(regions, cmp=lambda x,y: cmp(sum(x['up_counts']+x['down_counts']), sum(y['up_counts']+y['down_counts'])), reverse = True )
@@ -369,34 +394,8 @@ def order_by_score(regions, reverse=True):
     """Reorders the list of input regions by score"""
     return sorted(regions, cmp=lambda x,y: cmp(x['score'], y['score']), reverse = reverse )
 
-# def plot_counts(up_count, down_counts, out_prefix):
-#     """ ploting function just for testing and debugging propose..."""
-#     import matplotlib
-#     matplotlib.use('Agg') # Plotting backend that not depend on X-server. Must be before importing matplotlib.pyplot or pylab!
-#     from matplotlib import pyplot
-#     
-#     size = up_counts.shape[1]
-#     
-#     up_sum = np.sum(up_counts, axis=0)
-#     down_sum = np.sum(down_counts, axis=0)
-#     
-#     print(up_sum)
-#     print(down_sum)
-# 
-#     pyplot.plot( np.arange( -size/2, size/2 ), up_sum, "-bo" )   
-#     pyplot.plot( np.arange( -size/2, size/2 ), down_sum, "-ro" )   
-#     pyplot.xlim( (-size/2, size/2) )
-#     pyplot.grid()
-#     pyplot.xticks([i for i in range(-size/2, size/2) if i % 5 == 0])
-#     pyplot.savefig(out_prefix + ".sum.pdf")
-#     pyplot.clf()
-# 
-#     pyplot.bar( np.arange( -size/2, size/2 ), up_sum, color="b" )   
-#     pyplot.bar( np.arange( -size/2, size/2 ), down_sum * -1, color="r" )   
-#     pyplot.xlim( (-size/2, size/2) )
-#     pyplot.grid()
-#     pyplot.savefig(out_prefix + ".bar.pdf")
-#     pyplot.clf()
+
+## Other functions
 
 # def flip_strands(regions):
 #     """ Filp the strand of all input regions """
@@ -428,15 +427,14 @@ def order_by_score(regions, reverse=True):
 #         # addjust 1-based genomic location in the format "chr:start-end"
 #         s["location"] = s["chr"] + ":" + str(s["ext_start"]+1) + "-" + str(s["ext_end"])    
 
+
+## Main 
+
 if __name__ == "__main__":
 
     # read commandline argumets
     args = commandline()
-#     print args
     
-    # test for valid size argument:
-#     if not args.size % 2 == 0 : 
-#         sys.exit("ERROR: Size argument should be a multiple of two. Exit now.")
     # test validity of other arguments:
     if args.number_of_sites and args.percent_of_sites: 
         sys.exit("ERROR: '--number_of_sites' and '--percent_of_sites' arguments are mutually exclusive. Exit now.")
@@ -456,7 +454,6 @@ if __name__ == "__main__":
     if args.perm:
         files_to_analyze +=  permuted_res
         suffixes += permuted_suffix
-#     print files_to_analyze
     for index in xrange(len(files_to_analyze)):
 
         file_to_analyze = files_to_analyze[index]
@@ -466,9 +463,6 @@ if __name__ == "__main__":
             sites = parse_matrix_scan(file_to_analyze)            
             # extend sites to region of given size:
             regions = add_center(sites, args.size)
-
-#         elif args.input_format.lower() == "bed":
-#             regions = parse_bed(file_to_analyze)
 
         else:
             sys.exit("ERROR: INPUT_FORMAT shuld be one of 'matrix-scan' or 'bed'. Exit now.")
