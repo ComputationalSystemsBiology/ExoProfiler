@@ -87,20 +87,9 @@ plot_formats=c("pdf")
 # read argument from command line:
 args <- (commandArgs(TRUE))
 prefix <- args[1] 
-# prefix <- './5primeCounter/outputs_usecase3/output_5primeCounter_full' 
-# prefix <- './5primeCounter/outputs_usecase2/output_5primeCounter_wperm'
-# prefix <- './5primeCounter/outputs_usecase3/output_5primeCounter_wgenomechr20'
 
-# prefix <- './example_data/article/outputs/profile_CTCF_GR/output_5primeCounter_GR-MA0113-2_0-0001'
-# prefix <- './example_data/article/outputs/profile_IMR90_Combi/output_5primeCounter_Combi-oligos-6nt-mkv4-m5_0-0001'
-# prefix <- './example_data/article/outputs/profile_IMR90_FOX/output_5primeCounter_FOX-MA0148-3_0-0001'
-# prefix <- './example_data/article/outputs/profile_IMR90_GR/output_5primeCounter_GR-MA0113-2_0-0001'
-# prefix <- './example_data/article/outputs/profile_IMR90_STAT/output_5primeCounter_STAT-MA0137-3_0-0001'
-# prefix <- './example_data/article/outputs/profile_K562_GR/output_5primeCounter_GR-MA0113-2_0-0001'
-# prefix <- './example_data/article/outputs/profile_U2OS_GR/output_5primeCounter_GR-MA0113-2_0-0001'
-
-do_plot_QC <- any(args == 'genome_seq') # do_plot_QC <- FALSE
-do_plot_perm <- any(args == 'perm') # do_plot_perm <- FALSE
+do_plot_QC <- any(args == 'genome_seq') 
+do_plot_perm <- any(args == 'perm') 
 
 print(args)
 print(do_plot_QC)
@@ -129,7 +118,7 @@ xs <- (-m/2):(m/2-1)
 # Heatmap like plot with max of forward and reverse counts per cell:
 ########################################################################
 
-MAX_COUNT <- ifelse(max(up_counts,down_counts)<100, 10, 100)
+# MAX_COUNT <- ifelse(max(up_counts,down_counts)<100, 10, 100)
 
 # scale data logarithmically for better visualisation of low count sites.
 heat.val.up <- log10(up_counts + PSEUDOCOUNT)/log10(MAX_COUNT + PSEUDOCOUNT)
@@ -195,7 +184,7 @@ for ( f in plot_formats ) {
     dev.off()
 }
 
-MAX_COUNT <- 100
+# MAX_COUNT <- 100
 
 ########################################################################
 # 5'coverage profile plot

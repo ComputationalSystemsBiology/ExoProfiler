@@ -67,13 +67,13 @@ def commandline():
     parser.add_argument("-of", "--output_seq", action="store_true", help="Write a genomic sequences in FASTA format for the binding site regions defined by --size and --order_by_score. Needs a genome in FASTA format to be provided using option --genome_seq.")
 
     # Use case 4
-    # parser.add_argument("-sd", "--shift_dist", type=int, help="Shift sites by given distance (in bp) to the right (if positive) or to the left (if negative).")
+    parser.add_argument("-sd", "--shift_dist", type=int, help="Shift sites by given distance (in bp) to the right (if positive) or to the left (if negative).")
 
     # Other options
     parser.add_argument("-os", "--order_by_score", action="store_true", help="By default, output regions are sorted by occupancy level (number of total read counts). This option sorts output regions by score instead of occupancy level.")
     parser.add_argument("-n", "--number_of_sites", type=int, help="Number of sites to be considered. For a given N take only the top N sites by occupancy level (or motif score if -os is set).")
     parser.add_argument("-p", "--percent_of_sites", type=float, help="Percent of sites to be considered. For a given P take only the top P percent sites by occupancy level (or motif score if -os is set).")
-    # parser.add_argument("-fs", "--flip_strand", action="store_true", help="Flip the strand of motif matches from ‘+’ to ‘-’ and from ‘-’ to ‘+’ for all input sites.")
+    parser.add_argument("-fs", "--flip_strand", action="store_true", help="Flip the strand of motif matches from ‘+’ to ‘-’ and from ‘-’ to ‘+’ for all input sites.")
 
     return parser.parse_args()
 
@@ -397,35 +397,35 @@ def order_by_score(regions, reverse=True):
 
 ## Other functions
 
-# def flip_strands(regions):
-#     """ Filp the strand of all input regions """
-#     print "INFO: Flip strand of all input sites."
-#     
-#     for i in range(len(regions)):
-#         
-#         strand = regions[i]["strand"]
-#         
-#         if strand == "+":
-#             regions[i]["strand"] = "-"
-#         elif strand == "-":
-#             regions[i]["strand"] = "+"
-# 
-#     return regions
+def flip_strands(regions):
+    """ Filp the strand of all input regions """
+    print "INFO: Flip strand of all input sites."
+    
+    for i in range(len(regions)):
+        
+        strand = regions[i]["strand"]
+        
+        if strand == "+":
+            regions[i]["strand"] = "-"
+        elif strand == "-":
+            regions[i]["strand"] = "+"
 
-# def shift_sites(regions, shift_dist):
-#     """Shift all regions by indicated distance to the right (if positive) or to the left (if negative) """
-# 
-#     for s in regions:
-#         for coord in ["start", "center", "end", "ext_start", "ext_end"]:
-#             
-#             # in case of motif on negative stand, shift in oposite direction
-#             if s["strand"] == '-':
-#                 s[coord] -= shift_dist
-#             else:
-#                 s[coord] += shift_dist
-#             
-#         # addjust 1-based genomic location in the format "chr:start-end"
-#         s["location"] = s["chr"] + ":" + str(s["ext_start"]+1) + "-" + str(s["ext_end"])    
+    return regions
+
+def shift_sites(regions, shift_dist):
+    """Shift all regions by indicated distance to the right (if positive) or to the left (if negative) """
+
+    for s in regions:
+        for coord in ["start", "center", "end", "ext_start", "ext_end"]:
+            
+            # in case of motif on negative stand, shift in oposite direction
+            if s["strand"] == '-':
+                s[coord] -= shift_dist
+            else:
+                s[coord] += shift_dist
+            
+        # addjust 1-based genomic location in the format "chr:start-end"
+        s["location"] = s["chr"] + ":" + str(s["ext_start"]+1) + "-" + str(s["ext_end"])    
 
 
 ## Main 
@@ -468,12 +468,12 @@ if __name__ == "__main__":
             sys.exit("ERROR: INPUT_FORMAT shuld be one of 'matrix-scan' or 'bed'. Exit now.")
     
         # if option 'flip_strand' is given, flip strand of all input sites:
-#       if args.flip_strand:
-#           regions = flip_strands(regions)
+      if args.flip_strand:
+          regions = flip_strands(regions)
     
         # if option shift_dist is set, shift sites by given distance:
-#       if args.shift_dist:
-#           shift_sites(regions, args.shift_dist)
+      if args.shift_dist:
+          shift_sites(regions, args.shift_dist)
         
         # parse 5' coverage counts from BAM file:
         regions = reads_profile(regions, args.bam_file, args.size)
