@@ -72,7 +72,7 @@ custom.dist <- function(input.matrix, my.function) {
 ########################################################################
 
 # maximal 5'coverage count value for visualization in heatmaps
-MAX_COUNT = 5 #100
+MAX_COUNT = 100
 
 # pseudocount to 5'coverage values, needed for proper log transformation in the heatmaps
 PSEUDOCOUNT = 1
