@@ -5,7 +5,7 @@
 
 5PrimeCounter analyses a BAM file from a ChIP-Exo experiment in the context of potential transcription factor binding sites (TFBS) presenting a given sequence motif of interest.
 
-Consequently, as input files, 5PrimeCounter needs a BAM file (and its BAI index) and a set of sequence motifs as created by MatrixScanWS for instance, or any output file of RSAT’s tool ‘matrix_scan’.
+Consequently, as input files, 5PrimeCounter needs a BAM file (and its BAI index) and a set of sequence motifs as created by MatrixScanWS for instance, or any output file of RSAT's tool 'matrix_scan'.
 
 Please note that in case of motif hits on both strands in the same location, only the one with highest score will be considered.
 
@@ -18,7 +18,7 @@ Use cases
 
 Requirements
 
-    5PrimeCounter depends on python packages ‘numpy’, ‘pysam’ and ‘HTSeq’. If a reference genome is provided to calculate consensus sequences (see Use case 3), 5PrimeCounter also imports the ‘pyfasta’ package.
+    5PrimeCounter depends on python packages 'numpy', 'pysam' and 'HTSeq'. If a reference genome is provided to calculate consensus sequences (see Use case 3), 5PrimeCounter also imports the 'pyfasta' package.
 
 Developed with:
 
@@ -56,11 +56,11 @@ def commandline():
     parser.add_argument("-o", "--output_prefix", type=str, required=True, help="All output file names will have that prefix. Can include a path.")
 
     parser.add_argument("-s", "--size", type=int, default=60, help="Window size around motif for which the profile will be computed.")
-    parser.add_argument("-ob", "--output_bed", action="store_true", help="Write a BED file with the binding site regions defined by –-size and –-order_by_score.")
+    parser.add_argument("-ob", "--output_bed", action="store_true", help="Write a BED file with the binding site regions defined by --size and --order_by_score.")
     parser.add_argument("-if", "--input_format", type=str, choices=['matrix-scan'], default="matrix-scan", help="Input format, 'matrix-scan' output (default).")
 
 	# Use case 2
-    parser.add_argument("-pm", "--perm", action="store_true", help="Compute profiles from matrix-scan results for permuted matrices. 5PrimeCounter searches for all files with the same name as the <INPUT_SITES> file, plus the tag ‘_perm’ and a number. Files must be located in the same folder as <INPUT_SITES>.")
+    parser.add_argument("-pm", "--perm", action="store_true", help="Compute profiles from matrix-scan results for permuted matrices. 5PrimeCounter searches for all files with the same name as the <INPUT_SITES> file, plus the tag '_perm' and a number. Files must be located in the same folder as <INPUT_SITES>.")
 
     # Use case 3
     parser.add_argument("-g", "--genome_seq", type=str, help="Reference genome sequence in FASTA format. If this optional argument is given, the consensus sequence of the motif is plotted at the bottom of profile and heatmap plots. Moreover sequences for all binding regions will be written to an integer-encoded matrix file. Note, if a fasta file is read for the first time, an index is built in the same directory for faster access. First execution can thus be slower.")
@@ -73,7 +73,7 @@ def commandline():
     parser.add_argument("-os", "--order_by_score", action="store_true", help="By default, output regions are sorted by occupancy level (number of total read counts). This option sorts output regions by score instead of occupancy level.")
     parser.add_argument("-n", "--number_of_sites", type=int, help="Number of sites to be considered. For a given N take only the top N sites by occupancy level (or motif score if -os is set).")
     parser.add_argument("-p", "--percent_of_sites", type=float, help="Percent of sites to be considered. For a given P take only the top P percent sites by occupancy level (or motif score if -os is set).")
-    parser.add_argument("-fs", "--flip_strand", action="store_true", help="Flip the strand of motif matches from ‘+’ to ‘-’ and from ‘-’ to ‘+’ for all input sites.")
+    parser.add_argument("-fs", "--flip_strand", action="store_true", help="Flip the strand of motif matches from '+' to '-' and from '-' to '+' for all input sites.")
 
     return parser.parse_args()
 
@@ -468,12 +468,12 @@ if __name__ == "__main__":
             sys.exit("ERROR: INPUT_FORMAT shuld be one of 'matrix-scan' or 'bed'. Exit now.")
     
         # if option 'flip_strand' is given, flip strand of all input sites:
-      if args.flip_strand:
-          regions = flip_strands(regions)
+        if args.flip_strand:
+            regions = flip_strands(regions)
     
         # if option shift_dist is set, shift sites by given distance:
-      if args.shift_dist:
-          shift_sites(regions, args.shift_dist)
+        if args.shift_dist:
+            shift_sites(regions, args.shift_dist)
         
         # parse 5' coverage counts from BAM file:
         regions = reads_profile(regions, args.bam_file, args.size)

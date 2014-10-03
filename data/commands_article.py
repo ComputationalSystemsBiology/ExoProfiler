@@ -24,7 +24,7 @@ def_outputdir = './outputs'
 def_figuresdir = './figures'
 
 tool_matrixScanWS = '../00_matrixScanWS/matrixScanWS.py'
-tool_5PrimeCounter = '../01_5PrimeScanner/5PrimeScanner.py'
+tool_5PrimeCounter = '../01_5PrimeCounter/5PrimeCounter.py'
 tool_exoPlotter = '../02_exoPlotter/exoPlotter.R'
 
 import os
