@@ -38,6 +38,8 @@ ici mettre la ligne de commande pour indexer bam avec samtools
 
 ### BED files
 
+In the article, we used as input ChIP-seq peaks (note that the pipeline can also take as input other types of peaks within which one want to analyse ChIp-exo signal)
+
 ### Motifs
 
 Motifs are already available in the GitHub repository, but can also be downloaded from JASPAR.
