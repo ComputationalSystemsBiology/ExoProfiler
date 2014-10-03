@@ -7,11 +7,11 @@ ExoProfiler
   
   
 >
-> Analyzing transcription factor (TF) binding sites using ChIP-Seq and ChIP-exo data.  
+> Analyzing transcription factor (TF) binding sites using ChIP-exo data.  
 > 
 
 >   
-> Stephan R. Starick*, Jonas Ibn-Salem*, Marcel Jurk, Céline Hernandez, Michael I. Love, Ho-Ryun Chung, Martin Vingron, Morgane Thomas-Chollier#, Sebastiaan H. Meijsing# **ChIP-exo footprints provide structural and functional insights into the genomic binding of cooperating transcription factors.**, submitted
+> Stephan R. Starick*, Jonas Ibn-Salem*, Marcel Jurk, Céline Hernandez, Michael I. Love, Ho-Ryun Chung, Martin Vingron, Morgane Thomas-Chollier#, Sebastiaan H. Meijsing# **ChIP-exo signal associated with DNA-binding motifs provides structural and functional insights into the genomic binding of cooperating transcription factors.**, submitted
 >
 
 Table of Content
@@ -20,7 +20,7 @@ Table of Content
 1. [Requirements](#requirements)
 1. [Pipeline presentation](#pipeline)
 1. [Example analysis](#example)
-1. [Licence](#license)
+1. [License](#license)
 
 ***
 ***
@@ -29,6 +29,8 @@ Requirements <a id="requirements"></a>
 ------------------------------------------------------------------------
 
 [Back to top](#top)
+
+The ExoProfiler pipeline is composed of three different steps.
 
 1. MatrixScanWS
 1. 5PrimeCounter
@@ -53,16 +55,14 @@ Package dependencies:
 
 Tool developed in Python by Jonas Ibn-Salem.
 
-5PrimeCounter depends on python packages 'numpy', 'pysam' and 'HTSeq'. If a reference genome is provided to calculate consensus sequences (see Use case 3), 5PrimeCounter also imports the 'pyfasta' package.
-
 Developed with:
 
 * Python (2.7.3).
 
 Package dependencies: 
 
-* numpy, [HTSeq](https://pypi.python.org/pypi/HTSeq) (see [installation guide](http://www-huber.embl.de/users/anders/HTSeq/doc/install.html)), [pysam](https://pypi.python.org/pypi/pysam) (HTSeq dependency)
-* (optional) pyfasta, FASTA package (need depend on command line options)
+* [numpy](https://pypi.python.org/pypi/numpy), [HTSeq](https://pypi.python.org/pypi/HTSeq) (see [installation guide](http://www-huber.embl.de/users/anders/HTSeq/doc/install.html)), [pysam](https://pypi.python.org/pypi/pysam) (HTSeq dependency)
+* (optional) [pyfasta](https://pypi.python.org/pypi/pyfasta). If a reference genome is provided to calculate consensus sequences (see Use case 3), 5PrimeCounter also imports the 'pyfasta' package.
 
 
 ### ExoPlotter
@@ -73,7 +73,7 @@ Developed with:
 
 * R (2.14.1).
 
-Package dependencies: 
+Package dependencies (available on CRAN): 
 
 * gdata (NB: gtools will also be installed).
 * ape 
@@ -81,8 +81,9 @@ Package dependencies:
 
 ***
 ***
+<a id="pipeline"></a>
 
-Pipeline presentation <a id="pipeline"></a>
+Pipeline presentation
 ------------------------------------------------------------------------
 
 [Back to top](#top)
@@ -97,7 +98,6 @@ The full pipeline is composed of three different steps.
     * Use case 1 : basic usage
     * Use case 2 : validation using permuted matrices
     * Use case 3 : QC and FASTA creation using an input genome
-    * Use case 4 : motif comparison (overlay mode)
   * Additional information
 3. **ExoPlotter**
 
@@ -105,7 +105,7 @@ The full pipeline is composed of three different steps.
 
 ### 1. MatrixScanWS (Optional step)
 
-MatrixScanWS takes advantage of RSAT web services in order to convert a BED file into FASTA sequences, which are then scanned using a given matrix (transfac format).
+MatrixScanWS takes advantage of [RSAT](http://rsat.eu) web services  in order to convert a BED file into FASTA sequences, which are then scanned using a given matrix (transfac format).
 
 #### Steps and RSAT tools involved (as web services)
 
@@ -180,18 +180,7 @@ Short name | Long name | Description
 --- | --- | ---
 -of | \--output\_seq | Write a genomic sequences in FASTA format for the binding site regions defined by \--size and \--order_by_score. Needs a genome in FASTA format to be provided using option \--genome\_seq.
 
-  
-  
-  
-##### Use case 4 : motif comparison (overlay mode)
 
-A distance, manually computed, can be provided to shift sites by a given base pair number.
-
- Short name | Long name | Description
- --- | --- | ---
- -sd \<SHIFT_DIST> | \--shift_dist \<SHIFT_DIST> | Shift sites by given distance (in bp) to the right (if positive) or to the left (if negative).
-
-  
   
   
 #### Aditional information
@@ -218,6 +207,13 @@ List of other possible command line options.
  --- | --- | ---
  -h | \--help | Show help message and exit.
  -fs | \--flip_strand  | Flip the strand of motif matches from '+' to '-' and from '-' to '+' for all input sites.
+
+A distance, manually computed, can be provided to shift sites by a given base pair number.
+
+ Short name | Long name | Description
+ --- | --- | ---
+ -sd \<SHIFT_DIST> | \--shift_dist \<SHIFT_DIST> | Shift sites by given distance (in bp) to the right (if positive) or to the left (if negative).
+
 
   
 ***
@@ -256,14 +252,12 @@ Example analysis
     * Use case 1 : basic usage
     * Use case 2 : validation using permuted matrices
     * Use case 3 : QC and FASTA creation using an input genome
-    * Use case 4 : motif comparison (overlay mode)
    * Other examples
 3. ExoPlotter
    * Use cases (same as for 5PrimeCounter)
     * Use case 1 : basic usage
     * Use case 2 : validation using permuted matrices
     * Use case 3 : QC and FASTA creation using an input genome
-    * Use case 4 : motif comparison (overlay mode)
 
 ***
 
@@ -420,13 +414,6 @@ Output files
 \<output_prefix>.fa | Sequences of regions of interest (100 bp) in FASTA format.
 
 
- 
-##### Use case 4 : motif comparison (overlay mode)
-
-
-###### Overlay plots (Multiple profile plots)
-
-TODO
 
 
 ##### Other examples
@@ -505,10 +492,6 @@ File name | Content
 \<output\_5PrimeCounter\>\_seq.pdf | Quality check.
 
 
-
-##### Use case 4 : motif comparison (overlay mode)
-
-TODO
 
 ***
 ***
