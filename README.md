@@ -47,7 +47,7 @@ Developed with:
 
 Package dependencies: 
 
-* suds (0.4.1), numpy
+* [suds](https://pypi.python.org/pypi/suds) (0.4.1), [numpy](https://pypi.python.org/pypi/numpy)
 
 
 
