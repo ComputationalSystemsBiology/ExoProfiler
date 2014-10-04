@@ -14,7 +14,6 @@ Use cases
     Use case 1 : basic usage
     Use case 2 : validation using permuted matrices
     Use case 3 : QC and FASTA creation using an input genome
-    Use case 4 : motif comparison (overlay mode)
 
 Requirements
 
@@ -59,20 +58,18 @@ def commandline():
     parser.add_argument("-ob", "--output_bed", action="store_true", help="Write a BED file with the binding site regions defined by --size and --order_by_score.")
     parser.add_argument("-if", "--input_format", type=str, choices=['matrix-scan'], default="matrix-scan", help="Input format, 'matrix-scan' output (default).")
 
-	# Use case 2
+    # Use case 2
     parser.add_argument("-pm", "--perm", action="store_true", help="Compute profiles from matrix-scan results for permuted matrices. 5PrimeCounter searches for all files with the same name as the <INPUT_SITES> file, plus the tag '_perm' and a number. Files must be located in the same folder as <INPUT_SITES>.")
 
     # Use case 3
     parser.add_argument("-g", "--genome_seq", type=str, help="Reference genome sequence in FASTA format. If this optional argument is given, the consensus sequence of the motif is plotted at the bottom of profile and heatmap plots. Moreover sequences for all binding regions will be written to an integer-encoded matrix file. Note, if a fasta file is read for the first time, an index is built in the same directory for faster access. First execution can thus be slower.")
     parser.add_argument("-of", "--output_seq", action="store_true", help="Write a genomic sequences in FASTA format for the binding site regions defined by --size and --order_by_score. Needs a genome in FASTA format to be provided using option --genome_seq.")
 
-    # Use case 4
-    parser.add_argument("-sd", "--shift_dist", type=int, help="Shift sites by given distance (in bp) to the right (if positive) or to the left (if negative).")
-
     # Other options
     parser.add_argument("-os", "--order_by_score", action="store_true", help="By default, output regions are sorted by occupancy level (number of total read counts). This option sorts output regions by score instead of occupancy level.")
     parser.add_argument("-n", "--number_of_sites", type=int, help="Number of sites to be considered. For a given N take only the top N sites by occupancy level (or motif score if -os is set).")
     parser.add_argument("-p", "--percent_of_sites", type=float, help="Percent of sites to be considered. For a given P take only the top P percent sites by occupancy level (or motif score if -os is set).")
+    parser.add_argument("-sd", "--shift_dist", type=int, help="Shift sites by given distance (in bp) to the right (if positive) or to the left (if negative).")
     parser.add_argument("-fs", "--flip_strand", action="store_true", help="Flip the strand of motif matches from '+' to '-' and from '-' to '+' for all input sites.")
 
     return parser.parse_args()
