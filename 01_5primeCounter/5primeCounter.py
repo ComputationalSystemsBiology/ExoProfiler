@@ -15,9 +15,6 @@ Use cases
     Use case 2 : validation using permuted matrices
     Use case 3 : QC and FASTA creation using an input genome
 
-Requirements
-
-    5PrimeCounter depends on python packages 'numpy', 'pysam' and 'HTSeq'. If a reference genome is provided to calculate consensus sequences (see Use case 3), 5PrimeCounter also imports the 'pyfasta' package.
 
 Developed with:
 
@@ -26,7 +23,7 @@ Developed with:
 Package dependencies:
 
     numpy, HTSeq (see installation guide), pysam (HTSeq dependency)
-    (optional) pyfasta, FASTA package (need depend on command line options)
+    (optional) pyfasta. If a reference genome is provided to calculate consensus sequences (see Use case 3), 5PrimeCounter also imports the 'pyfasta' package.
 
 Tool developed in Python by Jonas Ibn-Salem.
 
