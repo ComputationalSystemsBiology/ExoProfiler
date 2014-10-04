@@ -1,5 +1,6 @@
 ***
 ***
+
 <a id="top"></a>
 
 ExoProfiler
@@ -18,14 +19,14 @@ Table of Content
 ------------------------------------------------------------------------
 
 1. [Requirements](#requirements)
-1. [Pipeline presentation](#pipeline)
-1. [Example analysis](#example)
+1. [Pipeline presentation](#pipeline-presentation)
+1. [Example analysis](#example-analysis)
 1. [License](#license)
 
 ***
 ***
 
-Requirements <a id="requirements"></a>
+Requirements<a id="requirements"></a>
 ------------------------------------------------------------------------
 
 [Back to top](#top)
@@ -81,9 +82,9 @@ Package dependencies (available on CRAN):
 
 ***
 ***
-<a id="pipeline"></a>
 
-Pipeline presentation
+
+Pipeline presentation<a id="pipeline-presentation"></a>
 ------------------------------------------------------------------------
 
 [Back to top](#top)
@@ -236,9 +237,9 @@ Where :
 ***
 ***
 
-Example analysis
+Example analysis<a id="example-analysis"></a>
 ------------------------------------------------------------------------
-<a id="example"></a>
+
 
 [Back to top](#top)
 
