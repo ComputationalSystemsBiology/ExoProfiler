@@ -14,6 +14,12 @@ ExoProfiler
 >   
 > Stephan R. Starick*, Jonas Ibn-Salem*, Marcel Jurk, Céline Hernandez, Michael I. Love, Ho-Ryun Chung, Martin Vingron, Morgane Thomas-Chollier#, Sebastiaan H. Meijsing# **ChIP-exo signal associated with DNA-binding motifs provides structural and functional insights into the genomic binding of cooperating transcription factors.**, submitted
 >
+  
+  
+> 
+> Would you be willing to reproduce figures appearing in the article, please have a look at ExoProfiler/data/README.md which describes where to download data and how to re-execute the pipeline.
+> 
+
 
 Table of Content
 ------------------------------------------------------------------------
@@ -259,6 +265,7 @@ Example analysis<a id="example-analysis"></a>
     * Use case 1 : basic usage
     * Use case 2 : validation using permuted matrices
     * Use case 3 : QC and FASTA creation using an input genome
+
 
 ***
 
