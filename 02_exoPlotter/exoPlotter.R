@@ -20,7 +20,7 @@
 # 
 # * R (2.14.1).
 # 
-# Package dependencies: 
+# Package dependencies (available on CRAN):
 # 
 # * gdata (NB: gtools will also be installed).
 # * ape 
