@@ -1,21 +1,21 @@
 #!/usr/bin/env python
 
-bed_IMR90 = './inputs/bed/GR_IMR90.chip-seq_peaks.bed.center60'
-bed_K562 = './inputs/bed/GR_K562.rep1.chip-seq_peaks.bed.center60'
-bed_U2OS = './inputs/bed/GR_U2OS.chip-seq_peaks.bed.center60'
-bed_CTCF = './inputs/bed/GSM325897_HeLa-CTCF-bsites.txt.hg19'
+bed_IMR90 = './inputs/bed/IMR90_GR_chip-seq_rep1_peaks.bed'
+bed_K562 = './inputs/bed/K562_GR_chip-seq_rep1_peaks.bed'
+bed_U2OS = './inputs/bed/U2OS_GR_chip-seq_peaks.bed'
+# bed_CTCF = './inputs/bed/GSM325897_HeLa-CTCF-bsites.txt.hg19'
 
-bam_IMR90 = './inputs/bam/IMR90.rep2.uniq_mapped.bam.sorted.bam'
-bam_K562 = './inputs/bam/K562.bam.sorted.bam'
-bam_U2OS = './inputs/bam/U2OS.bam.sorted.bam'
-bam_CTCF = './inputs/bam/SRR346403.m1_v3.bam.merged.bam.sorted.bam'
+bam_IMR90 = './inputs/bam/IMR90_GR_chip-exo.bam'
+bam_K562 = './inputs/bam/K562_GR_chip-exo.bam'
+bam_U2OS = './inputs/bam/U2OS_GR_chip-exo.bam'
+# bam_CTCF = './inputs/bam/SRR346403.m1_v3.bam.merged.bam.sorted.bam'
 
 motif_GR = './inputs/motif/MA0113.2.tf'
 motif_STAT = './inputs/motif/MA0137.3.tf'
 motif_combi = './inputs/motif/oligos_6nt_mkv4_m5.tf'
 motif_FOX = './inputs/motif/MA0148.3.tf'
 motif_GATA1 = './inputs/motif/MA0035.3.tf'
-motif_CTCF = './inputs/motif/MA0139.1.tf'
+# motif_CTCF = './inputs/motif/MA0139.1.tf'
 
 genome_hg19 = './inputs/genome/hg19.fa'
 
@@ -329,53 +329,53 @@ subprocess.check_call(["Rscript", tool_exoPlotter,
                        ], stdout=log_stdout)
 log_stdout.close()
 
-##########################################################################################
-# Processing
-
-
-## BAM : CTCF, motif: GR (JASPAR MA0113.2)
-
-# Preprocessing : call matrixScanWS
-
-output_prepdir_CTCF_GR = os.path.join(def_outputdir, 'preprocessing_CTCF_GR')
-os.makedirs(output_prepdir_CTCF_GR)
-
-output_preprocessing_CTCF_GR = os.path.join(output_prepdir_CTCF_GR, 'output_matrix-scan_CTCF_GR-MA0113-2_0-0001.txt')
-log_stdout = open(os.path.join(def_logsdir, "log_prep_CTCF_GR.txt"), "wb")
-subprocess.check_call(['python', tool_matrixScanWS, 
-                       '--bed_file', bed_CTCF,
-                       '--genome', 'hg19',
-                       '--matrix_file', motif_GR,
-                       '--uth_pval', '0.0001',
-                       '--output_file', output_preprocessing_CTCF_GR,
-                       '--perm'
-                       ], stdout=log_stdout)
-log_stdout.close()
-
-# Compute profiles
-
-output_profdir_CTCF_GR = os.path.join(def_outputdir, 'profile_CTCF_GR')
-os.makedirs(output_profdir_CTCF_GR)
-
-output_prof_CTCF_GR = os.path.join(output_profdir_CTCF_GR, 'output_5PrimeCounter_CTCF_GR-MA0113-2_0-0001')
-log_stdout = open(os.path.join(def_logsdir, 'log_prof_CTCF_GR.txt'), "wb")
-subprocess.check_call(['python', tool_5PrimeCounter,
-                       '--input_sites', output_preprocessing_CTCF_GR,
-                       '--bam_file', bam_CTCF,
-                       '--output_prefix', output_prof_CTCF_GR,
-                       '--genome_seq', genome_hg19,
-                       '--perm'
-                       ], stdout=log_stdout)
-log_stdout.close()
-
-# Plot results
-log_stdout = open(os.path.join(def_logsdir, 'log_plot_CTCF_GR.txt'), "wb")
-subprocess.check_call(["Rscript", tool_exoPlotter, 
-                       output_prof_CTCF_GR, 
-                       'genome_seq', 
-                       'perm'
-                       ], stdout=log_stdout)
-log_stdout.close()
+# ##########################################################################################
+# # Processing
+# 
+# 
+# ## BAM : CTCF, motif: GR (JASPAR MA0113.2)
+# 
+# # Preprocessing : call matrixScanWS
+# 
+# output_prepdir_CTCF_GR = os.path.join(def_outputdir, 'preprocessing_CTCF_GR')
+# os.makedirs(output_prepdir_CTCF_GR)
+# 
+# output_preprocessing_CTCF_GR = os.path.join(output_prepdir_CTCF_GR, 'output_matrix-scan_CTCF_GR-MA0113-2_0-0001.txt')
+# log_stdout = open(os.path.join(def_logsdir, "log_prep_CTCF_GR.txt"), "wb")
+# subprocess.check_call(['python', tool_matrixScanWS, 
+#                        '--bed_file', bed_CTCF,
+#                        '--genome', 'hg19',
+#                        '--matrix_file', motif_GR,
+#                        '--uth_pval', '0.0001',
+#                        '--output_file', output_preprocessing_CTCF_GR,
+#                        '--perm'
+#                        ], stdout=log_stdout)
+# log_stdout.close()
+# 
+# # Compute profiles
+# 
+# output_profdir_CTCF_GR = os.path.join(def_outputdir, 'profile_CTCF_GR')
+# os.makedirs(output_profdir_CTCF_GR)
+# 
+# output_prof_CTCF_GR = os.path.join(output_profdir_CTCF_GR, 'output_5PrimeCounter_CTCF_GR-MA0113-2_0-0001')
+# log_stdout = open(os.path.join(def_logsdir, 'log_prof_CTCF_GR.txt'), "wb")
+# subprocess.check_call(['python', tool_5PrimeCounter,
+#                        '--input_sites', output_preprocessing_CTCF_GR,
+#                        '--bam_file', bam_CTCF,
+#                        '--output_prefix', output_prof_CTCF_GR,
+#                        '--genome_seq', genome_hg19,
+#                        '--perm'
+#                        ], stdout=log_stdout)
+# log_stdout.close()
+# 
+# # Plot results
+# log_stdout = open(os.path.join(def_logsdir, 'log_plot_CTCF_GR.txt'), "wb")
+# subprocess.check_call(["Rscript", tool_exoPlotter, 
+#                        output_prof_CTCF_GR, 
+#                        'genome_seq', 
+#                        'perm'
+#                        ], stdout=log_stdout)
+# log_stdout.close()
 
 ##########################################################################################
 # Processing
@@ -427,55 +427,55 @@ subprocess.check_call(["Rscript", tool_exoPlotter,
 log_stdout.close()
 
 
-##########################################################################################
-# Processing
-
-
-## BAM : CTCF, motif: CTCF (JASPAR MA0139.1)
-
-# Preprocessing : call matrixScanWS
-
-output_prepdir_CTCF_CTCF = os.path.join(def_outputdir, 'preprocessing_CTCF_CTCF')
-os.makedirs(output_prepdir_CTCF_CTCF)
-
-output_preprocessing_CTCF_CTCF = os.path.join(output_prepdir_CTCF_CTCF, 'output_matrix-scan_CTCF_CTCF-MA0139-1_0-0001.txt')
-log_stdout = open(os.path.join(def_logsdir, "log_prep_CTCF_CTCF.txt"), "wb")
-subprocess.check_call(['python', tool_matrixScanWS, 
-                       '--bed_file', bed_CTCF,
-                       '--genome', 'hg19',
-                       '--matrix_file', motif_CTCF,
-                       '--uth_pval', '0.0001',
-                       '--output_file', output_preprocessing_CTCF_CTCF,
-                       '--perm'
-                       ], stdout=log_stdout)
-log_stdout.close()
-
-# Compute profiles
-
-output_profdir_CTCF_CTCF = os.path.join(def_outputdir, 'profile_CTCF_CTCF')
-os.makedirs(output_profdir_CTCF_CTCF)
-
-output_prof_CTCF_CTCF = os.path.join(output_profdir_CTCF_CTCF, 'output_5PrimeCounter_CTCF_CTCF-MA0139-1_0-0001')
-log_stdout = open(os.path.join(def_logsdir, 'log_prof_CTCF_CTCF.txt'), "wb")
-subprocess.check_call(['python', tool_5PrimeCounter,
-                       '--input_sites', output_preprocessing_CTCF_CTCF,
-                       '--bam_file', bam_CTCF,
-                       '--output_prefix', output_prof_CTCF_CTCF,
-                       '--genome_seq', genome_hg19,
-                       '--size', '100',
-                       '--perm'
-                       ], stdout=log_stdout)
-log_stdout.close()
-
-# Plot results
-
-log_stdout = open(os.path.join(def_logsdir, 'log_plot_CTCF_CTCF.txt'), "wb")
-subprocess.check_call(["Rscript", tool_exoPlotter, 
-                       output_prof_CTCF_CTCF, 
-                       'genome_seq', 
-                       'perm'
-                       ], stdout=log_stdout)
-log_stdout.close()
+# ##########################################################################################
+# # Processing
+# 
+# 
+# ## BAM : CTCF, motif: CTCF (JASPAR MA0139.1)
+# 
+# # Preprocessing : call matrixScanWS
+# 
+# output_prepdir_CTCF_CTCF = os.path.join(def_outputdir, 'preprocessing_CTCF_CTCF')
+# os.makedirs(output_prepdir_CTCF_CTCF)
+# 
+# output_preprocessing_CTCF_CTCF = os.path.join(output_prepdir_CTCF_CTCF, 'output_matrix-scan_CTCF_CTCF-MA0139-1_0-0001.txt')
+# log_stdout = open(os.path.join(def_logsdir, "log_prep_CTCF_CTCF.txt"), "wb")
+# subprocess.check_call(['python', tool_matrixScanWS, 
+#                        '--bed_file', bed_CTCF,
+#                        '--genome', 'hg19',
+#                        '--matrix_file', motif_CTCF,
+#                        '--uth_pval', '0.0001',
+#                        '--output_file', output_preprocessing_CTCF_CTCF,
+#                        '--perm'
+#                        ], stdout=log_stdout)
+# log_stdout.close()
+# 
+# # Compute profiles
+# 
+# output_profdir_CTCF_CTCF = os.path.join(def_outputdir, 'profile_CTCF_CTCF')
+# os.makedirs(output_profdir_CTCF_CTCF)
+# 
+# output_prof_CTCF_CTCF = os.path.join(output_profdir_CTCF_CTCF, 'output_5PrimeCounter_CTCF_CTCF-MA0139-1_0-0001')
+# log_stdout = open(os.path.join(def_logsdir, 'log_prof_CTCF_CTCF.txt'), "wb")
+# subprocess.check_call(['python', tool_5PrimeCounter,
+#                        '--input_sites', output_preprocessing_CTCF_CTCF,
+#                        '--bam_file', bam_CTCF,
+#                        '--output_prefix', output_prof_CTCF_CTCF,
+#                        '--genome_seq', genome_hg19,
+#                        '--size', '100',
+#                        '--perm'
+#                        ], stdout=log_stdout)
+# log_stdout.close()
+# 
+# # Plot results
+# 
+# log_stdout = open(os.path.join(def_logsdir, 'log_plot_CTCF_CTCF.txt'), "wb")
+# subprocess.check_call(["Rscript", tool_exoPlotter, 
+#                        output_prof_CTCF_CTCF, 
+#                        'genome_seq', 
+#                        'perm'
+#                        ], stdout=log_stdout)
+# log_stdout.close()
 
 
 ##########################################################################################
@@ -559,9 +559,9 @@ shutil.copy(output_prof_U2OS_GR+'.maxstrand_heatmap.pdf', figures_dir)
 shutil.copy(output_prof_U2OS_GR+'.profile-perm.pdf', figures_dir)
 shutil.copy(output_prof_U2OS_GR+'.permut_matrix_10.values.tab', figures_dir)
 
-shutil.copy(output_prof_CTCF_GR+'.maxstrand_heatmap.pdf', figures_dir)
-shutil.copy(output_prof_CTCF_GR+'.profile-perm.pdf', figures_dir)
-shutil.copy(output_prof_CTCF_GR+'.permut_matrix_10.values.tab', figures_dir)
+# shutil.copy(output_prof_CTCF_GR+'.maxstrand_heatmap.pdf', figures_dir)
+# shutil.copy(output_prof_CTCF_GR+'.profile-perm.pdf', figures_dir)
+# shutil.copy(output_prof_CTCF_GR+'.permut_matrix_10.values.tab', figures_dir)
 
 ##########################################################################################
 # Figure S4
@@ -572,12 +572,12 @@ os.makedirs(figures_dir)
 shutil.copy(output_prof_K562_GATA1+'.profile-perm.pdf', figures_dir)
 shutil.copy(output_prof_K562_GATA1+'.permut_matrix_10.values.tab', figures_dir)
 
-##########################################################################################
-# Figure S7
-
-figures_dir = os.path.join(def_figuresdir, 'figure_S7')
-os.makedirs(figures_dir)
-
-shutil.copy(output_prof_CTCF_CTCF+'.profile-perm.pdf', figures_dir)
-shutil.copy(output_prof_CTCF_CTCF+'.permut_matrix_10.values.tab', figures_dir)
+# ##########################################################################################
+# # Figure S7
+# 
+# figures_dir = os.path.join(def_figuresdir, 'figure_S7')
+# os.makedirs(figures_dir)
+# 
+# shutil.copy(output_prof_CTCF_CTCF+'.profile-perm.pdf', figures_dir)
+# shutil.copy(output_prof_CTCF_CTCF+'.permut_matrix_10.values.tab', figures_dir)
 
