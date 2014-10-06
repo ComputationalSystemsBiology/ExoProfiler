@@ -40,7 +40,7 @@ Cell lines:
 * [IMR90](https://www.ebi.ac.uk/arrayexpress/files/E-MTAB-2956/IMR90_GR_chip-exo.bam)
 * [K562](https://www.ebi.ac.uk/arrayexpress/files/E-MTAB-2956/K562_GR_chip-exo.bam)
 * [U2OS](https://www.ebi.ac.uk/arrayexpress/files/E-MTAB-2956/U2OS_GR_chip-exo.bam)
-* CTCF SRA ID: SRR346403
+* CTCF, SRA ID: SRA044886 replicate 3, processed similarly to the original study (Rhee 2011).
 
 BAM files should be downloaded into ExoProfiler/data/inputs/bam, and indexed with samtools.
 
@@ -56,7 +56,7 @@ Cell lines:
 * [IMR90](https://www.ebi.ac.uk/arrayexpress/files/E-MTAB-2955/E-MTAB-2955.processed.1.zip/IMR90_GR_chip-seq_rep1_peaks.bed.gz)
 * [K562](https://www.ebi.ac.uk/arrayexpress/files/E-MTAB-2955/E-MTAB-2955.processed.1.zip/K562_GR_chip-seq_rep1_peaks.bed.gz)
 * [U2OS](https://www.ebi.ac.uk/arrayexpress/files/E-MTAB-2955/E-MTAB-2955.processed.1.zip/U2OS_GR_chip-seq_peaks.bed.gz)
-* CTCF SRA ID: SRR346403
+* CTCF, GEO ID: GSM325895 converted to hg19 with UCSC liftOver.
 
 These BED files should be downloaded into ExoProfiler/data/inputs/bed and unzipped.
 
