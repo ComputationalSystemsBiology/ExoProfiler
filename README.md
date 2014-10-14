@@ -25,6 +25,7 @@ Table of Content
 ------------------------------------------------------------------------
 
 1. [Requirements](#requirements)
+1. [Installation](#installation)
 1. [Pipeline presentation](#pipeline-presentation)
 1. [Example analysis](#example-analysis)
 1. [License](#license)
@@ -85,6 +86,21 @@ Package dependencies (available on CRAN):
 * gdata (NB: gtools will also be installed).
 * ape 
 
+
+***
+***
+
+Installation<a id="installation"></a>
+------------------------------------------------------------------------
+
+[Back to top](#top)
+
+To be installed in order to run the full pipeline:
+
+* Python (2.7.5), and packages: suds, numpy, HTSeq, pysam, pyfasta.
+* R (at least 2.14), and packages: gdata, ape.
+ 
+See above paragraph (Requirements) for more details.
 
 ***
 ***
