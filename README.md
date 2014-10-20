@@ -24,14 +24,30 @@ ExoProfiler
 Table of Content
 ------------------------------------------------------------------------
 
-1. [Requirements](#requirements)
 1. [Installation](#installation)
+1. [Requirements](#requirements)
 1. [Pipeline presentation](#pipeline-presentation)
 1. [Example analysis](#example-analysis)
 1. [License](#license)
 
 ***
 ***
+
+Installation<a id="installation"></a>
+------------------------------------------------------------------------
+
+[Back to top](#top)
+
+To be installed in order to run the full pipeline:
+
+* Python (2.7.5), and packages: suds, numpy, HTSeq, pysam, pyfasta.
+* R (at least 2.14), and packages: gdata, ape.
+ 
+See below (Requirements) for more details.
+
+***
+***
+
 
 Requirements<a id="requirements"></a>
 ------------------------------------------------------------------------
@@ -89,22 +105,6 @@ Package dependencies (available on CRAN):
 
 ***
 ***
-
-Installation<a id="installation"></a>
-------------------------------------------------------------------------
-
-[Back to top](#top)
-
-To be installed in order to run the full pipeline:
-
-* Python (2.7.5), and packages: suds, numpy, HTSeq, pysam, pyfasta.
-* R (at least 2.14), and packages: gdata, ape.
- 
-See above paragraph (Requirements) for more details.
-
-***
-***
-
 
 Pipeline presentation<a id="pipeline-presentation"></a>
 ------------------------------------------------------------------------
@@ -526,8 +526,10 @@ License
 
 [Back to top](#top)
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type">ExoProfiler</span> by <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">MPIMG & IBENS</span> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.<br />Based on a work at <a xmlns:dct="http://purl.org/dc/terms/" href="https://github.com/ComputationalSystemsBiology/ExoProfiler" rel="dct:source">https://github.com/ComputationalSystemsBiology/ExoProfiler</a>.
+Licence : GNU GPL 3.0
 
+Licences of packages used:
+* suds (?), numpy (BSD license), HTSeq (GNU GPL3), pysam (?), pyfasta (MIT).
 
 ***
 
