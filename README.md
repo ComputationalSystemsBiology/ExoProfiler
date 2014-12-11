@@ -223,6 +223,7 @@ List of other possible command line options.
  --- | --- | ---
  -n \<NUMBER_OF_SITES> | \--number_of_sites \<NUMBER_OF_SITES> | Number of sites to be considered. For a given N take only the top N sites by occupancy level (or motif score if -os is set).
  -p \<PERCENT_OF_SITES> | \--percent_of_sites \<PERCENT_OF_SITES> | Percent of sites to be considered. For a given P take only the top P percent sites by occupancy level (or motif score if -os is set).
+ -d \<DOWN_SAMPLE_SITES> | \--down_sample_sites \<DOWN_SAMPLE_SITES> | Down sample input sites. For a given D sample D sites randomly.
 
  * Miscellaneous
 

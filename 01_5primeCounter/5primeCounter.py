@@ -66,6 +66,7 @@ def commandline():
     parser.add_argument("-os", "--order_by_score", action="store_true", help="By default, output regions are sorted by occupancy level (number of total read counts). This option sorts output regions by score instead of occupancy level.")
     parser.add_argument("-n", "--number_of_sites", type=int, help="Number of sites to be considered. For a given N take only the top N sites by occupancy level (or motif score if -os is set).")
     parser.add_argument("-p", "--percent_of_sites", type=float, help="Percent of sites to be considered. For a given P take only the top P percent sites by occupancy level (or motif score if -os is set).")
+    parser.add_argument("-d", "--down_sample_sites", type=int, help="Down sample input sites. For a given D sample D sites randomly.")
     parser.add_argument("-sd", "--shift_dist", type=int, help="Shift sites by given distance (in bp) to the right (if positive) or to the left (if negative).")
     parser.add_argument("-fs", "--flip_strand", action="store_true", help="Flip the strand of motif matches from '+' to '-' and from '-' to '+' for all input sites.")
 
@@ -469,6 +470,12 @@ if __name__ == "__main__":
         if args.shift_dist:
             shift_sites(regions, args.shift_dist)
         
+        # down sample sites
+        if args.down_sample_sites:
+            import random
+            regions = random.sample(regions, args.down_sample_sites)
+            print "INFO: Input sites were down sampled to {0} regions.".format(len(regions))
+
         # parse 5' coverage counts from BAM file:
         regions = reads_profile(regions, args.bam_file, args.size)
         
