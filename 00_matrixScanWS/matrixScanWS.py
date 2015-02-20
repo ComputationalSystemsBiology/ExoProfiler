@@ -115,7 +115,8 @@ logging.getLogger('suds.client').setLevel(logging.ERROR)
 # Load Client class from suds
 from suds.client import Client
 # Define URL for RSAT services 
-wsdlUrl =  'http://rsat.ulb.ac.be/rsat/web_services/RSATWS.wsdl'
+#wsdlUrl =  'http://rsat.ulb.ac.be/rsat/web_services/RSATWS.wsdl'
+wsdlUrl =  'http://pedagogix-tagc.univ-mrs.fr/rsat/web_services/RSATWS.wsdl'
 # Create the client
 client = Client(wsdlUrl)
 # Need the service interface to perform requests
