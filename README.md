@@ -12,7 +12,7 @@ ExoProfiler
 > 
 
 >   
-> Stephan R. Starick*, Jonas Ibn-Salem*, Marcel Jurk, Céline Hernandez, Michael I. Love, Ho-Ryun Chung, Martin Vingron, Morgane Thomas-Chollier#, Sebastiaan H. Meijsing# **ChIP-exo signal associated with DNA-binding motifs provides structural and functional insights into the genomic binding of cooperating transcription factors.**, submitted
+> citation : Stephan R. Starick*, Jonas Ibn-Salem*, Marcel Jurk*, Céline Hernandez, Michael I. Love, Ho-Ryun Chung, Martin Vingron, Morgane Thomas-Chollier#, Sebastiaan H. Meijsing#  [ChIP-exo signal associated with DNA-binding motifs provide insights into the genomic binding of the glucocorticoid receptor and cooperating transcription factors.](http://genome.cshlp.org/content/early/2015/02/26/gr.185157.114), in press, Genome Research 2015
 >
   
   
