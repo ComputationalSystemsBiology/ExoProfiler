@@ -116,7 +116,8 @@ logging.getLogger('suds.client').setLevel(logging.ERROR)
 from suds.client import Client
 # Define URL for RSAT services 
 #wsdlUrl =  'http://rsat.ulb.ac.be/rsat/web_services/RSATWS.wsdl'
-wsdlUrl =  'http://pedagogix-tagc.univ-mrs.fr/rsat/web_services/RSATWS.wsdl'
+rsatURL = 'http://pedagogix-tagc.univ-mrs.fr/rsat/'
+wsdlUrl =  rsatURL + '/web_services/RSATWS.wsdl'
 # Create the client
 client = Client(wsdlUrl)
 # Need the service interface to perform requests
@@ -186,7 +187,7 @@ def perform_compare_matrices(service, args):
 	# But the server starts it in background. We have to access the output file 
 	# (extracted from the executed command) and download/read the file ourselves
 	command = result.command
-	url_to_download = 'http://rsat.ulb.ac.be/rsat' + command[command.rindex('-o \'$RSAT/public_html/')+21:-1]
+	url_to_download = rsatURL + command[command.rindex('-o \'$RSAT/public_html/')+21:-1]
 
 	# Open URL of the output file
 	import urllib2, numpy
