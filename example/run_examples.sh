@@ -45,7 +45,6 @@ python ../python/5primeCounter.py \
     --input_sites output_matrix_scan_0-001.txt \
     --bam_file data/input.sorted.bam \
     --output_prefix ./output_5PrimeCounter \
-    --size 100 \
     --output_bed
 
 # Use case 2
@@ -93,5 +92,14 @@ python ../python/5primeCounter.py \
 #------------------------------------------------
 # Step 03
 #------------------------------------------------
+
+# use case 1 :
+Rscript ../R/exoPlotter.R output_5PrimeCounter
+
+# use case 2:
+Rscript ../R/exoPlotter.R output_5PrimeCounter_wperm perm
+
+# use case 3:
+Rscript ../R/exoPlotter.R output_5PrimeCounter_wgenome genome_seq
 
 

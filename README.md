@@ -15,11 +15,13 @@ ExoProfiler
 Analyzing transcription factor (TF) binding sites using ChIP-exo data.
 
 
-citation: 
+citation:
 
-Stephan R. Starick\*, Jonas Ibn-Salem\*, Marcel Jurk\*, Céline Hernandez, Michael I. Love, Ho-Ryun Chung, Martin Vingron, Morgane Thomas-Chollier^#^, Sebastiaan H. Meijsing^#^  [ChIP-exo signal associated with DNA-binding motifs provide insights into the genomic binding of the glucocorticoid receptor and cooperating transcription factors.](http://genome.cshlp.org/content/25/6/825), Genome Reserch. 2015 Jun;25(6):825-35. doi: 10.1101/gr.185157.114.
+Stephan R. Starick\*, Jonas Ibn-Salem\*, Marcel Jurk\*, Céline Hernandez, Michael I. Love, Ho-Ryun Chung, Martin Vingron, Morgane Thomas-Chollier^#^, Sebastiaan H. Meijsing^#^  **[ChIP-exo signal associated with DNA-binding motifs provide insights into the genomic binding of the glucocorticoid receptor and cooperating transcription factors.](http://genome.cshlp.org/content/25/6/825)**, Genome Reserch. 2015 Jun;25(6):825-35. doi: 10.1101/gr.185157.114.
 
 Would you be willing to reproduce figures appearing in the article, please have a look at [ExoProfiler/data/README.md](ExoProfiler/data/README.md) which describes where to download data and how to re-execute the pipeline.
+
+********************************************************************************
 
 
 Table of Content
@@ -45,6 +47,7 @@ To be installed in order to run the full pipeline:
 See below (Requirements) for more details.
 
 
+********************************************************************************
 
 Requirements<a id="requirements"></a>
 ------------------------------------------------------------------------
@@ -71,6 +74,7 @@ Package dependencies:
 * [suds](https://pypi.python.org/pypi/suds) (0.4.1), [numpy](https://pypi.python.org/pypi/numpy)
 
 
+********************************************************************************
 
 ### 5PrimeCounter
 
@@ -114,8 +118,7 @@ Package dependencies (available on CRAN):
 * ape 
 
 
-***
-***
+********************************************************************************
 
 Pipeline presentation<a id="pipeline-presentation"></a>
 ------------------------------------------------------------------------
@@ -158,7 +161,6 @@ Finally, permuted matrices and outputs from 'matrix_scan' are written in the sam
 
   
 ***
-
   
 ### 2. 5PrimeCounter
 
@@ -539,6 +541,8 @@ python ../python/5primeCounter.py \
     --percent_of_sites 20
 ```
 
+***
+
 ### ExoPlotter
 
 Plot the profile from an output of 5PrimeCounter.
@@ -551,7 +555,9 @@ Prefix from 5PrimeCounter. This will be used to find output files from 5PrimeCou
 
 *Command*
 
-    Rscript exoPlotter.R <output_prefix_of_5PrimeCounter.py>
+```bash
+Rscript ../R/exoPlotter.R output_5PrimeCounter
+```
 
 *Output files*
 
@@ -568,15 +574,18 @@ Profiles also contain a summary of the permuted profiles computed previously, as
 
 *Command*
 
-    Rscript exoPlotter.R <output_prefix_of_5PrimeCounter.py> perm
+```bash
+Rscript ../R/exoPlotter.R output_5PrimeCounter_wperm perm
+```
 
 *Additional output files*
 
 Same files as for Use Case 1, plus:
 
- File name | Content
- --- | ---
- \<output_5PrimeCounter>.permut_matrix_10.values.tab | Contains the resulting p-value of the Wilcoxon rank sum test.
+ File name                          | Content
+------------------------------------| -----------
+\<output_5PrimeCounter>.profile-perm.pdf  | profile plot including permutated sites.
+\<output_5PrimeCounter>.permut_matrix_10.values.tab | Contains the resulting p-value of the Wilcoxon rank sum test.
 
 
 ##### Use case 3 : QC and FASTA creation using an input genome
@@ -588,7 +597,9 @@ If a label is provided saying that genome sequence was available, exoPlotter als
 
 *Command*
 
-    Rscript exoPlotter.R <output_prefix_of_5PrimeCounter.py> genome_seq
+```bash
+Rscript ../R/exoPlotter.R output_5PrimeCounter_wgenome genome_seq
+```
 
 *Additional output files*
 
@@ -598,10 +609,8 @@ File name | Content
 --- | ---
 \<output\_5PrimeCounter\>\_seq.pdf | Quality check.
 
+********************************************************************************
 
-
-***
-***
 
 License
 ---------------------------------
