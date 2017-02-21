@@ -1,13 +1,12 @@
 ########################################################################
 # 
-# This script runs example analysis as described in the README.
+# This script runs example analysis as described in the README.md file.
 #
 ########################################################################
 
-
-#------------------------------------------------
+#-----------------------------------------------------------------------
 # Step 01
-#------------------------------------------------
+#-----------------------------------------------------------------------
 python ../python/matrixScanWS.py \
     --bed_file data/input.bed \
     --genome hg19 \
@@ -24,9 +23,9 @@ python ../python/matrixScanWS.py \
     --output_file output_matrix_scan_0-001.txt \
     --perm
 
-#------------------------------------------------
+#-----------------------------------------------------------------------
 # Step 02
-#------------------------------------------------
+#-----------------------------------------------------------------------
 
 #Use case 1
 
@@ -80,7 +79,7 @@ python ../python/5primeCounter.py \
     --input_sites output_matrix_scan_0-001.txt \
     --bam_file data/input.sorted.bam \
     --output_prefix ./output_5PrimeCounter_100sites \
-     --number_of_sites 100
+    --number_of_sites 100
 
 python ../python/5primeCounter.py \
     --input_sites output_matrix_scan_0-001.txt \
@@ -89,9 +88,9 @@ python ../python/5primeCounter.py \
     --percent_of_sites 20
 
 
-#------------------------------------------------
+#-----------------------------------------------------------------------
 # Step 03
-#------------------------------------------------
+#-----------------------------------------------------------------------
 
 # use case 1 :
 Rscript ../R/exoPlotter.R output_5PrimeCounter
