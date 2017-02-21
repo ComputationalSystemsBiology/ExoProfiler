@@ -1,8 +1,3 @@
----
-output:
-  github_document:
-    html_preview: true
----
 
 
 
@@ -27,14 +22,15 @@ Would you be willing to reproduce figures appearing in the article, please have 
 Table of Content
 ------------------------------------------------------------------------
 
-1. [Installation](#installation)
-1. [Requirements](#requirements)
+1. [Requirements and Installation](#requirements)
 1. [Pipeline presentation](#pipeline-presentation)
 1. [Example analysis](#example-analysis)
 1. [License](#license)
 
 
-Installation<a id="installation"></a>
+********************************************************************************
+
+Requirements and Installation<a id="requirements"></a>
 ------------------------------------------------------------------------
 
 [Back to top](#top)
@@ -43,16 +39,7 @@ To be installed in order to run the full pipeline:
 
 * Python (2.7.5), and packages: suds, numpy, HTSeq (>= 0.7.0), pysam, pyfasta.
 * R (at least 2.14), and packages: gdata, ape.
- 
-See below (Requirements) for more details.
 
-
-********************************************************************************
-
-Requirements<a id="requirements"></a>
-------------------------------------------------------------------------
-
-[Back to top](#top)
 
 The ExoProfiler pipeline is composed of three different steps.
 
@@ -93,16 +80,15 @@ Package dependencies:
 
 HTSeq 0.7.0 is not yet available from PyPI. Therefore you need to install it directly from the [github repository](https://github.com/simon-anders/htseq/releases).
 
-1. Install  pip [https://pip.pypa.io/en/latest/installing/]
+1. Install  [pip](https://pip.pypa.io/en/latest/installing/)
 1. Install Cython and matplotlib
-```bash
-pip install Cython
-pip install 'matplotlib>=1.4'
-```
+
+        pip install Cython
+        pip install 'matplotlib>=1.4'
+
 1. Install HTSeq from github:
-```bash
-pip install https://github.com/simon-anders/htseq/archive/release_0.7.0.tar.gz
-```
+
+		pip install https://github.com/simon-anders/htseq/archive/release_0.7.0.tar.gz
 
 ### ExoPlotter
 
@@ -276,8 +262,14 @@ Where :
 Example analysis<a id="example-analysis"></a>
 ------------------------------------------------------------------------
 
-
 [Back to top](#top)
+
+To run this examples go to [example](example) directory. 
+
+	cd example
+
+All necessary input data can be found in [example/data](example/data) directory.
+The example analalyis consists of the following steps:
 
 1. MatrixScanWS (Optional step)
    * Input files
@@ -297,10 +289,6 @@ Example analysis<a id="example-analysis"></a>
     * Use case 3 : QC and FASTA creation using an input genome
 
 
-To run this examples go to [example](example) directory.
-```bash
-cd example
-```
 
 ### MatrixScanWS (Optional step)
 
@@ -308,10 +296,10 @@ Using web services, scan a set of sequences for a motif provided as a matrix.
 
 #### Input files
 
-BED file : ```input.bed```  
+BED file : ```data/input.bed```  
 Output of a ChIP-Seq experiment from a human sample, i.e. list of peaks.
 
-Matrix (transfac) : ```matrix.tf```  
+Matrix (transfac) : ```data/matrix.tf```  
 Matrix describing a motif as available in [JASPAR database](http://jaspar.genereg.net/cgi-bin/jaspar_db.pl?ID=MA0113.1&rm=present&collection=CORE).
 
 
