@@ -1,5 +1,10 @@
-***
-***
+---
+output:
+  github_document:
+    html_preview: true
+---
+
+
 
 <a id="top"></a>
 
@@ -7,18 +12,14 @@ ExoProfiler
 ========================================================================
   
   
->
-> Analyzing transcription factor (TF) binding sites using ChIP-exo data.  
-> 
+Analyzing transcription factor (TF) binding sites using ChIP-exo data.
 
->   
-> citation : Stephan R. Starick*, Jonas Ibn-Salem*, Marcel Jurk*, Céline Hernandez, Michael I. Love, Ho-Ryun Chung, Martin Vingron, Morgane Thomas-Chollier#, Sebastiaan H. Meijsing#  [ChIP-exo signal associated with DNA-binding motifs provide insights into the genomic binding of the glucocorticoid receptor and cooperating transcription factors.](http://genome.cshlp.org/content/early/2015/02/26/gr.185157.114), in press, Genome Research 2015
->
-  
-  
-> 
-> Would you be willing to reproduce figures appearing in the article, please have a look at ExoProfiler/data/README.md which describes where to download data and how to re-execute the pipeline.
-> 
+
+citation: 
+
+Stephan R. Starick\*, Jonas Ibn-Salem\*, Marcel Jurk\*, Céline Hernandez, Michael I. Love, Ho-Ryun Chung, Martin Vingron, Morgane Thomas-Chollier^#^, Sebastiaan H. Meijsing^#^  [ChIP-exo signal associated with DNA-binding motifs provide insights into the genomic binding of the glucocorticoid receptor and cooperating transcription factors.](http://genome.cshlp.org/content/25/6/825), Genome Reserch. 2015 Jun;25(6):825-35. doi: 10.1101/gr.185157.114.
+
+Would you be willing to reproduce figures appearing in the article, please have a look at [ExoProfiler/data/README.md](ExoProfiler/data/README.md) which describes where to download data and how to re-execute the pipeline.
 
 
 Table of Content
@@ -30,8 +31,6 @@ Table of Content
 1. [Example analysis](#example-analysis)
 1. [License](#license)
 
-***
-***
 
 Installation<a id="installation"></a>
 ------------------------------------------------------------------------
@@ -40,13 +39,11 @@ Installation<a id="installation"></a>
 
 To be installed in order to run the full pipeline:
 
-* Python (2.7.5), and packages: suds, numpy, HTSeq, pysam, pyfasta.
+* Python (2.7.5), and packages: suds, numpy, HTSeq (>= 0.7.0), pysam, pyfasta.
 * R (at least 2.14), and packages: gdata, ape.
  
 See below (Requirements) for more details.
 
-***
-***
 
 
 Requirements<a id="requirements"></a>
@@ -85,9 +82,23 @@ Developed with:
 
 Package dependencies: 
 
-* [numpy](https://pypi.python.org/pypi/numpy), [HTSeq](https://pypi.python.org/pypi/HTSeq) (see [installation guide](http://www-huber.embl.de/users/anders/HTSeq/doc/install.html)), [pysam](https://pypi.python.org/pypi/pysam) (HTSeq dependency)
+* [numpy](https://pypi.python.org/pypi/numpy), [HTSeq](simon-anders/htseq), [pysam](https://pypi.python.org/pypi/pysam) (HTSeq dependency)
 * (optional) [pyfasta](https://pypi.python.org/pypi/pyfasta). If a reference genome is provided to calculate consensus sequences (see Use case 3), 5PrimeCounter also imports the 'pyfasta' package.
 
+#### Installation of HTSeq (>= 0.7.0)
+
+HTSeq 0.7.0 is not yet available from PyPI. Therefore you need to install it directly from the [github repository](https://github.com/simon-anders/htseq/releases).
+
+1. Install  pip [https://pip.pypa.io/en/latest/installing/]
+1. Install Cython and matplotlib
+```bash
+pip install Cython
+pip install 'matplotlib>=1.4'
+```
+1. Install HTSeq from github:
+```bash
+pip install https://github.com/simon-anders/htseq/archive/release_0.7.0.tar.gz
+```
 
 ### ExoPlotter
 
@@ -284,7 +295,10 @@ Example analysis<a id="example-analysis"></a>
     * Use case 3 : QC and FASTA creation using an input genome
 
 
-***
+To run this examples go to [example](example) directory.
+```bash
+cd example
+```
 
 ### MatrixScanWS (Optional step)
 
@@ -298,12 +312,21 @@ Output of a ChIP-Seq experiment from a human sample, i.e. list of peaks.
 Matrix (transfac) : ```matrix.tf```  
 Matrix describing a motif as available in [JASPAR database](http://jaspar.genereg.net/cgi-bin/jaspar_db.pl?ID=MA0113.1&rm=present&collection=CORE).
 
+
 #### Use cases
 
 
 ##### Use case 1: basic usage
 
-    python matrixScanWS.py --bed_file input.bed --genome hg19 --matrix_file matrix.tf --uth_pval 0.001 --output_file ./output_matrix_scan_0-001.txt
+```bash
+python ../python/matrixScanWS.py \
+    --bed_file data/input.bed \
+    --genome hg19 \
+    --matrix_file data/matrix.tf \
+    --uth_pval 0.001 \
+    --output_file output_matrix_scan_0-001.txt
+
+```
 
 Output file
 
@@ -313,8 +336,16 @@ Output file
 
 Same command with --perm option.
 
-    python matrixScanWS.py --bed_file input.bed --genome hg19 --matrix_file matrix.tf --uth_pval 0.001 --output_file ./output_matrix_scan_0-001.txt --perm
-
+```bash
+python ../python/matrixScanWS.py \
+    --bed_file data/input.bed \
+    --genome hg19 \
+    --matrix_file data/matrix.tf \
+    --uth_pval 0.001 \
+    --output_file output_matrix_scan_0-001.txt \
+    --perm
+```
+    
 Output files
 
 * RSAT 'matrix_scan' output : ```./output_matrix_scan_0-001.txt```
@@ -338,10 +369,10 @@ Output files
 
 ###### Input files
 
-* BAM file : ```input.bam```  
+* BAM file : ```data/input.sorted.bam```  
 Sequence read alignment data in binary format.
 
-* BAI file : ```input.bam.bai```  
+* BAI file : ```data/input.sorted.bam.bai```  
 Index of the BAM file, created with `samtools index`. This index must be located in the same folder as the BAM file.
 
 * RSAT 'matrix_scan' output : ```output_matrix_scan.txt```  
@@ -358,18 +389,35 @@ Basic usage of 5PrimeCounter implies providing at least three parameters:
 
 Example of a simple command line :
 
-    python 5PrimeCounter.py --input_sites output_matrix_scan.txt --bam_file input.bam --output_prefix ./output_5PrimeCounter
+```bash
+python ../python/5primeCounter.py \
+    --input_sites output_matrix_scan_0-001.txt \
+    --bam_file data/input.sorted.bam \
+    --output_prefix output_5PrimeCounter
+```
 
 5PrimeCounter assumes that the 'input sites' file is an output from `matrix_scan`
 
 Example of a case where the size of the window around the motif has been changed with option --size. Default window size is set to 60.
 
-    python 5PrimeCounter.py --input_sites output_matrix_scan.txt --bam_file input.bam --output_prefix ./output_5PrimeCounter --size 100
+```bash
+python ../python/5primeCounter.py \
+    --input_sites output_matrix_scan_0-001.txt \
+    --bam_file data/input.sorted.bam \
+    --output_prefix ./output_5PrimeCounter \
+    --size 100
+```
 
 Example of generation of an additional BED output, in case we changed the size of our region of interest.
 
-    python 5PrimeCounter.py --input_sites output_matrix_scan.txt --bam_file input.bam --output_prefix ./output_5PrimeCounter --size 100 --output_bed
-
+```bash
+python ../python/5primeCounter.py \
+    --input_sites output_matrix_scan_0-001.txt \
+    --bam_file data/input.sorted.bam \
+    --output_prefix ./output_5PrimeCounter \
+    --size 100 \
+    --output_bed
+```
 
 ###### Output files
 
@@ -384,7 +432,13 @@ Example of generation of an additional BED output, in case we changed the size o
 
 Following Use Case 2 of MatrixScanWS a set of permuted motifs can be generated. One can then run 5PrimeCounter on all the generated matrix-scan outputs.
 
-    python 5PrimeCounter.py --input_sites output_matrix_scan.txt --bam_file input.bam --output_prefix ./output_5PrimeCounter_wperm --perm
+```bash
+python ../python/5primeCounter.py \
+    --input_sites output_matrix_scan_0-001.txt \
+    --bam_file data/input.sorted.bam \
+    --output_prefix ./output_5PrimeCounter_wperm \
+    --perm
+```
 
 * Output files
 
@@ -397,22 +451,27 @@ Genome files in FASTA format can be quite voluminous. Default behaviour of 5Prim
 
 ###### Input files
 
-* BAM file : ```input.bam```  
+* BAM file : ```data/input.sorted.bam```  
 Sequence read alignment data in binary format.
 
-* BAI file : ```input.bam.bai```  
+* BAI file : ``` data/input.sorted.bam.bai```  
 Index of the BAM file, created with `samtools index`. This index must be located in the same folder as the BAM file.
 
 * RSAT 'matrix\_scan' output : ```output_matrix_scan.txt```  
 Output from RSAT tool ```matrix_scan```, or directly generated by MatrixScanWS.
 
-* Reference genome : ```genome.fa```  
+* Reference genome : ```data/chr1.sub.fa```  
 A FASTA file as downloaded from, for instance, UCSC's FTP site : ftp://hgdownload.cse.ucsc.edu/goldenPath/ Please note that files need to be decompressed into FASTA in order to be read by 5PrimeCounter.
 
 ###### Command
 
-    python 5PrimeCounter.py --input_sites output_matrix_scan.txt --bam_file input.bam --output_prefix ./output_5PrimeCounter_wgenome --genome_seq ./genome.fa
-
+```bash
+python ../python/5primeCounter.py \
+    --input_sites output_matrix_scan_0-001.txt \
+    --bam_file data/input.sorted.bam \
+    --output_prefix ./output_5PrimeCounter_wgenome \
+    --genome_seq data/chr1.sub.fa
+```
 
 ###### Output files
 
@@ -426,7 +485,15 @@ A FASTA file as downloaded from, for instance, UCSC's FTP site : ftp://hgdownloa
 
 ###### Example of generation of an additional FASTA output.
 
-    python 5PrimeCounter.py --input_sites output_matrix_scan.txt --bam_file input.bam --output_prefix ./output_5PrimeCounter_wgenome --genome_seq ./genome.fa --size 100 --output_seq
+```bash
+python ../python/5primeCounter.py \
+    --input_sites output_matrix_scan_0-001.txt \
+    --bam_file data/input.sorted.bam \
+    --output_prefix  ./output_5PrimeCounter_wgenome \
+    --genome_seq data/chr1.sub.fa \
+    --size 100 \
+    --output_seq
+```
 
 Output files
 
@@ -445,17 +512,32 @@ Output files
 
 Example of ordering output by score instead of by coverage.
 
-    python 5PrimeCounter.py --input_sites output_matrix_scan.txt --bam_file input.bam --output_prefix ./output_5PrimeCounter_orderscore --order_by_score
-
+```bash
+python ../python/5primeCounter.py \
+    --input_sites output_matrix_scan_0-001.txt \
+    --bam_file data/input.sorted.bam \
+    --output_prefix ./output_5PrimeCounter_orderscore \
+    --order_by_score
+```
+    
 Example of changing number of output sites.
 
-    python 5PrimeCounter.py --input_sites output_matrix_scan.txt --bam_file input.bam --output_prefix ./output_5PrimeCounter_100sites --number_of_sites 100
+```bash
+python ../python/5primeCounter.py \
+    --input_sites output_matrix_scan_0-001.txt \
+    --bam_file data/input.sorted.bam \
+    --output_prefix ./output_5PrimeCounter_100sites \
+    --number_of_sites 100
+```
 
-    python 5PrimeCounter.py --input_sites output_matrix_scan.txt --bam_file input.bam --output_prefix ./output_5PrimeCounter_20pcsites --percent_of_sites 20
 
-
-
-***
+```bash
+python ../python/5primeCounter.py \
+    --input_sites output_matrix_scan_0-001.txt \
+    --bam_file data/input.sorted.bam \
+    --output_prefix ./output_5PrimeCounter_20pcsites \
+    --percent_of_sites 20
+```
 
 ### ExoPlotter
 
