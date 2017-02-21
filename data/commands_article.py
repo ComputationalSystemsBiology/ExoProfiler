@@ -23,9 +23,9 @@ def_logsdir = './logs'
 def_outputdir = './outputs'
 def_figuresdir = './figures'
 
-tool_matrixScanWS = '../00_matrixScanWS/matrixScanWS.py'
-tool_5PrimeCounter = '../01_5PrimeCounter/5PrimeCounter.py'
-tool_exoPlotter = '../02_exoPlotter/exoPlotter.R'
+tool_matrixScanWS = '../python/matrixScanWS.py'
+tool_5PrimeCounter = '../python/5PrimeCounter.py'
+tool_exoPlotter = '../R/exoPlotter.R'
 
 import os
 import shutil
