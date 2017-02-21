@@ -12,7 +12,7 @@ Analyzing transcription factor (TF) binding sites using ChIP-exo data.
 
 citation:
 
-Stephan R. Starick\*, Jonas Ibn-Salem\*, Marcel Jurk\*, Céline Hernandez, Michael I. Love, Ho-Ryun Chung, Martin Vingron, Morgane Thomas-Chollier^#^, Sebastiaan H. Meijsing^#^  **[ChIP-exo signal associated with DNA-binding motifs provide insights into the genomic binding of the glucocorticoid receptor and cooperating transcription factors.](http://genome.cshlp.org/content/25/6/825)**, Genome Reserch. 2015 Jun;25(6):825-35. doi: 10.1101/gr.185157.114.
+Stephan R. Starick\*, Jonas Ibn-Salem\*, Marcel Jurk\*, Céline Hernandez, Michael I. Love, Ho-Ryun Chung, Martin Vingron, Morgane Thomas-Chollier<sup>#</sup>, Sebastiaan H. Meijsing<sup>#</sup>  **[ChIP-exo signal associated with DNA-binding motifs provide insights into the genomic binding of the glucocorticoid receptor and cooperating transcription factors.](http://genome.cshlp.org/content/25/6/825)**, Genome Reserch. 2015 Jun;25(6):825-35. doi: 10.1101/gr.185157.114.
 
 Would you be willing to reproduce figures appearing in the article, please have a look at [ExoProfiler/data/README.md](ExoProfiler/data/README.md) which describes where to download data and how to re-execute the pipeline.
 
@@ -287,7 +287,6 @@ The example analalyis consists of the following steps:
     * Use case 1 : basic usage
     * Use case 2 : validation using permuted matrices
     * Use case 3 : QC and FASTA creation using an input genome
-
 
 
 ### MatrixScanWS (Optional step)
