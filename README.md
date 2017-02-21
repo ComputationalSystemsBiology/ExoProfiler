@@ -73,7 +73,7 @@ Developed with:
 
 Package dependencies: 
 
-* [numpy](https://pypi.python.org/pypi/numpy), [HTSeq](simon-anders/htseq), [pysam](https://pypi.python.org/pypi/pysam) (HTSeq dependency)
+* [numpy](https://pypi.python.org/pypi/numpy), [HTSeq](https://github.com/simon-anders/htseq), [pysam](https://pypi.python.org/pypi/pysam) (HTSeq dependency)
 * (optional) [pyfasta](https://pypi.python.org/pypi/pyfasta). If a reference genome is provided to calculate consensus sequences (see Use case 3), 5PrimeCounter also imports the 'pyfasta' package.
 
 #### Installation of HTSeq (>= 0.7.0)
