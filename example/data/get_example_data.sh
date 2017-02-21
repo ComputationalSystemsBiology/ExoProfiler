@@ -1,11 +1,11 @@
 ########################################################################
 # 
-# This scirpts downloads and formates some example input data for the 
+# This scirpt downloads and formates some example input data for the 
 # ExoProfiler pipeline.
 # 
 # Note, this is just to document the creation of example data. You do
-# not need to run this script to run the examples. The data created here
-# is already provided in this repository. 
+# not need to run this script in order to run the examples. 
+# The data created here is already provided in this repository. 
 #
 ########################################################################
 
@@ -89,6 +89,7 @@ bedtools getfasta \
 # Clean up by removing temporary files
 #------------------------------------------------
 rm IMR90_GR_chip-seq_rep1_peaks.bed
+rm input.window.bed
 rm IMR90_GR_chip-exo.bam
 rm IMR90_GR_chip-exo.sorted.bam
 rm IMR90_GR_chip-exo.sorted.bam.bai
@@ -96,7 +97,6 @@ rm input.bam
 rm chr1.fa
 rm chr1.fa.fai
 rm range.bed
-
 
 #------------------------------------------------
 # setup latest HTSeq version
