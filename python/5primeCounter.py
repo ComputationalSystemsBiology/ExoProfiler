@@ -190,7 +190,7 @@ def reads_profile(regions, bam_file, size):
         if reg["chr"] in chromosomes:
 
             # get GenomicInterval object. extend it by +-1 to for including reads on negative strand inside the interval
-            iv = HTSeq.GenomicInterval( reg["chr"], reg["ext_start"]-1, reg["ext_end"]+1, reg["strand"] )
+            iv = HTSeq.GenomicInterval( reg["chr"], max(0, reg["ext_start"]-1), reg["ext_end"]+1, reg["strand"] )
 
             # iterate over all reads mapping to that region (interval)
             for aln in bamHandle[ iv ]:
