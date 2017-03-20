@@ -37,7 +37,7 @@ Requirements and Installation<a id="requirements"></a>
 
 To be installed in order to run the full pipeline:
 
-* Python (2.7.5), and packages: suds, numpy, HTSeq (>= 0.7.0), pysam, pyfasta.
+* Python (2.7.5), and packages: suds, numpy, [HTSeq (>= 0.7.1)](https://pypi.python.org/pypi/HTSeq), pysam, pyfasta.
 * R (at least 2.14), and packages: gdata, ape.
 
 
@@ -73,22 +73,8 @@ Developed with:
 
 Package dependencies: 
 
-* [numpy](https://pypi.python.org/pypi/numpy), [HTSeq](https://github.com/simon-anders/htseq), [pysam](https://pypi.python.org/pypi/pysam) (HTSeq dependency)
+* [numpy](https://pypi.python.org/pypi/numpy), [HTSeq (>= 0.7.1)](https://pypi.python.org/pypi/HTSeq), [pysam](https://pypi.python.org/pypi/pysam) (HTSeq dependency)
 * (optional) [pyfasta](https://pypi.python.org/pypi/pyfasta). If a reference genome is provided to calculate consensus sequences (see Use case 3), 5PrimeCounter also imports the 'pyfasta' package.
-
-#### Installation of HTSeq (>= 0.7.0)
-
-HTSeq 0.7.0 is not yet available from PyPI. Therefore you need to install it directly from the [github repository](https://github.com/simon-anders/htseq/releases).
-
-1. Install  [pip](https://pip.pypa.io/en/latest/installing/)
-1. Install Cython and matplotlib
-
-        pip install Cython
-        pip install 'matplotlib>=1.4'
-
-1. Install HTSeq from github:
-
-		pip install https://github.com/simon-anders/htseq/archive/release_0.7.0.tar.gz
 
 ### ExoPlotter
 
